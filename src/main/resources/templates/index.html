@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="pl" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Zegarkownia</title>
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+          th:href="@{https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css}"
+          integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+
+    <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet"
+          th:href="@{https://fonts.googleapis.com/css?family=Roboto&display=swap}">
+    <link href="https://fonts.googleapis.com/css?family=Kaushan+Script|Tinos&display=swap"
+          th:href="@{https://fonts.googleapis.com/css?family=Kaushan+Script|Tinos&display=swap}" rel="stylesheet">
+
+    <link href="../static/css/fragments.css" th:href="@{/css/fragments.css}" rel="stylesheet"/>
+    <link href="../static/css/custom.min.css" th:href="@{/css/custom.min.css}" rel="stylesheet"/>
+
+
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <span style="font-family: Tinos; color: white">MARKO&nbsp</span>
+    <span style="font-family: Kaushan Script, cursive; color: #82b440; margin-right: 25px;">zegarki</span>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav">
+            <li class="nav-item active">
+                <a class="nav-link" href="#">Zegarek.net<span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">Timetrend</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">Zegarownia</a>
+            </li>
+        </ul>
+    </div>
+</nav>
+<div class="container">
+    <div id="button-group">
+        <form action="#" th:action="@{/list}">
+            <button type="submit" class="btn btn-primary btn-sm">Dostępne marki</button>
+        </form>
+        <form action="#" th:action="@{/main}">
+            <button type="submit" class="btn btn-primary btn-sm">Dostępne marki</button>
+        </form>
+    </div>
+    <div>
+        <table class="table table-sm">
+            <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Marka</th>
+                <th scope="col">Linki</th>
+                <th scope="col">Ceny</th>
+                <th scope="col">Zdjęcia i atrybuty</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="product, iStat : ${testlist}">
+                <td th:text="${iStat.count}"></td>
+                <td><a th:text="${product.key}" th:href="@{${product.value}}"></a></td>
+                <td>
+                    <form action="#" th:action="@{/links}" method="post" >
+                        <input class="form-control" type="text" th:value="${product.value}" id="html" name="html" />
+                        <button style="width: 150px" type="submit" class="btn btn-primary btn-sm">Linki</button>
+                    </form>
+                </td>
+                <td>
+                    <button style="width: 150px" type="button" class="btn btn-primary btn-sm" th:href="@{${product.value}}">Ceny</button>
+                </td>
+                <td>
+                    <button style="width: 150px" type="button" class="btn btn-primary btn-sm" th:href="@{${product.value}}">Zdjęcia i atrybuty</button>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+</div>
+
+<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+        th:href="@{https://code.jquery.com/jquery-3.4.1.slim.min.js}"
+        integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
+        crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+        th:href="@{https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js}"
+        integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+        crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+        th:href="@{https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js}"
+        integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
+        crossorigin="anonymous"></script>
+<script type="text/javascript" href="../static/css/custom.min.css" th:href="@{/js/custom.min.js}"></script>
+
+</body>
+</html>
