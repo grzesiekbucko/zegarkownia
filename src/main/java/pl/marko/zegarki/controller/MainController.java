@@ -33,7 +33,7 @@ public class MainController {
 
     @RequestMapping(value = "/list", method = RequestMethod.GET)
     public ModelAndView watchList() throws IOException {
-        ModelAndView model = new ModelAndView("index");
+        ModelAndView model = new ModelAndView("mainPage");
         Map<String, String> watchlist = List();
         model.addObject("testlist", watchlist);
         model.addObject("name", watchlist.get(0));
@@ -50,6 +50,7 @@ public class MainController {
         model.addObject("success label", "File saved!");
         return model;
     }
+
 
 
     public static void getProduktLinks(String url) throws IOException {
