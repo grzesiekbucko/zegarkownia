@@ -4,35 +4,66 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.servlet.ModelAndView;
+import pl.marko.zegarki.entity.ZegarekNetBrand;
+import pl.marko.zegarki.entity.ZegarekNetProduct;
+import pl.marko.zegarki.repository.ZegarekNetBrandRepository;
+import pl.marko.zegarki.repository.ZegarekNetProductRepository;
 
 import java.io.FileWriter;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 @Service
-public class ZegareknetService  {
+public class ZegareknetService {
 
-    public String getProduktLinks(String url, String brand) throws IOException {
-        String dataFormat = (new SimpleDateFormat("yyyy-MM-dd_hh_mm_ss'.csv'")).format(new Date());
-        String nazwa = "Linki_" + brand + "_" + dataFormat;
-        FileWriter csvWriter = new FileWriter(nazwa);
+    @Autowired
+    private
+    ZegarekNetBrandRepository zegarekNetBrandRepository;
+
+    @Autowired
+    private
+    ZegarekNetProductRepository zegarekNetProductRepository;
+
+    public ArrayList<ZegarekNetBrand> getZegaNetBrand() {
+        ArrayList<ZegarekNetBrand> listBrand = (ArrayList<ZegarekNetBrand>) zegarekNetBrandRepository.findAll();
+        return listBrand;
+    }
+
+    public ModelAndView updateTimestamp(ModelAndView model) {
+        List<ZegarekNetBrand> list = getZegaNetBrand();
+        String pattern = "yyyy-MM-dd HH:mm:ss";
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
+
+        if (list.size() == 0) {
+            model.addObject("update_date", "-");
+        } else {
+            String date = simpleDateFormat.format(list.get(list.size() - 1).getUpdateDate());
+            model.addObject("update_date", date);
+        }
+
+        return model;
+    }
+
+    public void saveProduktLinks(String url, ZegarekNetBrand brand) throws IOException {
 
         Document start_page = Jsoup.connect(url).get();
         Element linkClass = start_page.select(".pagination").first();
 
-        if(linkClass == null){
+        if (linkClass == null) {
             Document linkDoc = Jsoup.connect(url).get();
             Elements nameClass = linkDoc.select(".products-list-name");
 
             for (Element el : nameClass) {
-                csvWriter.append(el.select("span").first().text() + ";" + el.attr("href") + "\n");
+                String productKod = el.select("span").first().text();
+                String productLink = el.attr("href");
+                ZegarekNetProduct product = new ZegarekNetProduct(productKod, productLink, brand);
+                zegarekNetProductRepository.save(product);
             }
-        }else {
+        } else {
             Elements link_class = start_page.select(".pagination").select("a");
             link_class.remove(link_class.last());
 
@@ -44,31 +75,26 @@ public class ZegareknetService  {
                 Elements nameClass = linkDoc.select(".products-list-name");
 
                 for (Element el : nameClass) {
-                    csvWriter.append(el.select("span").first().text() + ";" + el.attr("href") + "\n");
+                    String productKod = el.select("span").first().text();
+                    String productLink = el.attr("href");
+                    ZegarekNetProduct product = new ZegarekNetProduct(productKod, productLink, brand);
+                    zegarekNetProductRepository.save(product);
                 }
             }
         }
-        csvWriter.flush();
-        csvWriter.close();
-        return nazwa;
     }
 
-    public Map<String, String> List() throws IOException {
+    public void saveBrandList() throws IOException {
         Document linkDoc = Jsoup.connect("https://www.zegarek.net/sitemap.php").get();
         Element className = linkDoc.select(".sitemaps").first();
         Elements productLink = className.select("a");
-        ArrayList list = new ArrayList();
-        Map<String, String> attrMap = new HashMap<>();
 
         for (Element el : productLink) {
             String name = el.select("a").text().replace("Zegarki ", "");
             String link = el.attr("href");
 
-            attrMap.put(name, link);
-
-            System.out.println(name + " " + link);
+            ZegarekNetBrand brand = new ZegarekNetBrand(name, link);
+            zegarekNetBrandRepository.save(brand);
         }
-        return attrMap;
     }
-
 }

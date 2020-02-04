@@ -1,46 +1,53 @@
 package pl.marko.zegarki.entity;
 
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.List;
 
 @Entity(name="ZegarekNetBrand")
 @Table(name = "zegarek_net_brand")
 public class ZegarekNetBrand {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "id")
-    private Long id;
-
-    @Column(name="brand")
+    @Column(name="brand", unique=true)
     private String brand;
 
     @Column(name="link")
     private String link;
 
-    @CreationTimestamp
+    @UpdateTimestamp
     @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "create_date")
-    private Date createDate;
+    @Column(name = "update_Date")
+    private Date updateDate;
 
-    public ZegarekNetBrand(Long id, String brand, String link, Date created) {
-        this.id = id;
+    @OneToMany(mappedBy = "productBrand", fetch = FetchType.LAZY)
+    private List<ZegarekNetProduct> products;
+
+    public ZegarekNetBrand(String brand, String link) {
         this.brand = brand;
         this.link = link;
-        this.createDate = created;
     }
 
     public ZegarekNetBrand() {
     }
 
-    public Long getId() {
-        return id;
+    public List<ZegarekNetProduct> getProducts() {
+        return products;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setProducts(List<ZegarekNetProduct> products) {
+        this.products = products;
+    }
+
+    public Date getUpdateDate() {
+        return updateDate;
+    }
+
+    public void setUpdateDate(Date updateDate) {
+        this.updateDate = updateDate;
     }
 
     public String getBrand() {
@@ -59,11 +66,4 @@ public class ZegarekNetBrand {
         this.link = link;
     }
 
-    public Date getCreated() {
-        return createDate;
-    }
-
-    public void setCreated(Date created) {
-        this.createDate = created;
-    }
 }
