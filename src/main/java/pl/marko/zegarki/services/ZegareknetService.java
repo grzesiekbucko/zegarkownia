@@ -14,6 +14,7 @@ import pl.marko.zegarki.repository.ZegarekNetProductRepository;
 
 import java.io.FileWriter;
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -60,13 +61,21 @@ public class ZegareknetService {
 
         if (linkClass == null) {
             Document linkDoc = Jsoup.connect(url).get();
-            Elements nameClass = linkDoc.select(".products-list-name");
+            Elements prodBox = linkDoc.select(".products-list-box");
 
-            for (Element el : nameClass) {
-                String productKod = el.select("span").first().text();
-                String link = el.attr("href");
+            for (Element el : prodBox) {
+                Elements nameClass = el.select(".products-list-name");
+                String productKod = nameClass.select("span").first().text();
+                String link = nameClass.attr("href");
                 String productLink = "https://www.zegarek.net" + link;
-                ZegarekNetProduct product = new ZegarekNetProduct(productKod, productLink, brand);
+
+                String newPrice = el.select(".new-price").text().replace(".", "");
+                String oldPrice = el.select(".old-price").text().replace(".", "");
+
+                BigDecimal newPriceDouble = new BigDecimal(newPrice.replaceAll(",", "."));
+                BigDecimal oldPriceDouble = new BigDecimal(oldPrice.replaceAll(",", "."));
+
+                ZegarekNetProduct product = new ZegarekNetProduct(productKod, brand, productLink, newPriceDouble);
                 zegarekNetProductRepository.save(product);
             }
         } else {
@@ -78,14 +87,35 @@ public class ZegareknetService {
                 String START_URL = url + "?page=" + i;
 
                 Document linkDoc = Jsoup.connect(START_URL).get();
-                Elements nameClass = linkDoc.select(".products-list-name");
+                Elements prodBox = linkDoc.select(".products-list-box");
 
-                for (Element el : nameClass) {
-                    String productKod = el.select("span").first().text();
-                    String link = el.attr("href");
+                for (Element el : prodBox) {
+                    Elements nameClass = el.select(".products-list-name");
+                    String productKod = nameClass.select("span").first().text();
+                    String link = nameClass.attr("href");
                     String productLink = "https://www.zegarek.net" + link;
-                    ZegarekNetProduct product = new ZegarekNetProduct(productKod, productLink, brand);
-                    zegarekNetProductRepository.save(product);
+
+                    if(el.hasClass(".new-price") && el.hasClass(".old-price")){
+
+                        String newPrice = el.select(".new-price").text().replace(".", "").replace(" zł", "");
+                        BigDecimal newPriceDouble = new BigDecimal(newPrice.replaceAll(",", "."));
+
+                        String oldPrice = el.select(".old-price").text().replace(".", "").replace(" zł", "");
+
+                        BigDecimal oldPriceDouble = new BigDecimal(oldPrice.replaceAll(",", "."));
+
+                        ZegarekNetProduct product = new ZegarekNetProduct(productKod, brand, productLink, newPriceDouble, oldPriceDouble);
+                        zegarekNetProductRepository.save(product);
+
+                    } else {
+                        String newPrice = el.select(".new-price").text().replace(".", "").replace(" zł", "");
+                        BigDecimal newPriceDouble = new BigDecimal(newPrice.replaceAll(",", "."));
+
+                       ZegarekNetProduct product = new ZegarekNetProduct(productKod, brand, productLink, newPriceDouble);
+                       zegarekNetProductRepository.save(product);
+                   }
+
+
                 }
             }
         }

@@ -101,9 +101,10 @@
                                                     <th>#</th>
                                                     <th>Kod</th>
                                                     <th>Link</th>
+                                                    <th>Cena</th>
+                                                    <th>Cena promocyjna</th>
+                                                    <th>Rabat</th>
                                                     <th>Aktualizacja</th>
-                                                    <th></th>
-                                                    <th>Atrybuty i zdjęcia</th>
                                                 </tr>
                                                 </thead>
                                                 <tbody>
@@ -115,13 +116,16 @@
                                                         <a th:text="@{${product.productLink}}"
                                                            th:href="@{${product.productLink}}"></a>
                                                     </td>
+                                                    <td>
+                                                    </td>
+                                                    <td>
+                                                    </td>
+                                                    <td>
+                                                    </td>
                                                     <td th:text="${#dates.format(product.updateDate, 'dd-MM-yyyy HH:mm:ss')}">
                                                     </td >
-                                                    <td>
-                                                    </td>
-                                                    <td>
-                                                    </td>
                                                 </tr>
+
                                                 </tbody>
                                             </table>
                                         </div>
