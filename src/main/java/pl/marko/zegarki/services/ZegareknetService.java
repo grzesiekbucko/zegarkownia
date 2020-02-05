@@ -33,6 +33,11 @@ public class ZegareknetService {
         return listBrand;
     }
 
+    public ArrayList<ZegarekNetProduct> getZegaNetProducts(ZegarekNetBrand brand) {
+        ArrayList<ZegarekNetProduct> listProduct = (ArrayList<ZegarekNetProduct>) zegarekNetProductRepository.findByProductBrand(brand);
+        return listProduct;
+    }
+
     public ModelAndView updateTimestamp(ModelAndView model) {
         List<ZegarekNetBrand> list = getZegaNetBrand();
         String pattern = "yyyy-MM-dd HH:mm:ss";
@@ -59,7 +64,8 @@ public class ZegareknetService {
 
             for (Element el : nameClass) {
                 String productKod = el.select("span").first().text();
-                String productLink = el.attr("href");
+                String link = el.attr("href");
+                String productLink = "https://www.zegarek.net" + link;
                 ZegarekNetProduct product = new ZegarekNetProduct(productKod, productLink, brand);
                 zegarekNetProductRepository.save(product);
             }
@@ -76,7 +82,8 @@ public class ZegareknetService {
 
                 for (Element el : nameClass) {
                     String productKod = el.select("span").first().text();
-                    String productLink = el.attr("href");
+                    String link = el.attr("href");
+                    String productLink = "https://www.zegarek.net" + link;
                     ZegarekNetProduct product = new ZegarekNetProduct(productKod, productLink, brand);
                     zegarekNetProductRepository.save(product);
                 }

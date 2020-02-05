@@ -105,7 +105,7 @@
                                                     <th>#</th>
                                                     <th>Marka</th>
                                                     <th>Link kategorii</th>
-                                                    <th>Linki produktów z kategorii</th>
+                                                    <th><Produkty></Produkty></th>
                                                     <th>Ceny</th>
                                                     <th>Atrybuty i zdjęcia</th>
                                                 </tr>
@@ -120,20 +120,15 @@
                                                            th:href="@{${product.link}}"></a>
                                                     </td>
                                                     <td>
-                                                        <form th:action="@{/links}" method="post">
-                                                        <input type="hidden" name="brand" th:value="${product.brand}"/>
-                                                        <input type="hidden" name="html" th:value="${product.link}"/>
-                                                        <button type="submit" class="btn btn-success btn-sm"><i class="fa fa-link"></i><a>&emsp;linki</a></button>
+                                                        <form th:action="@{/products}" method="post">
+                                                            <input type="hidden" name="brand" th:value="${product.brand}"/>
+                                                            <input type="hidden" name="html" th:value="${product.link}"/>
+                                                            <button type="submit" class="btn btn-success btn-sm"><i class="fa fa-list"></i><a>&emsp;produkty</a></button>
                                                         </form>
                                                     </td>
                                                     <td>
-                                                        <form th:action="@{/products/{product.brand}}" method="post">
-                                                            <input type="hidden" name="products" th:value="${product.products}"/>
-                                                            <button type="submit" class="btn btn-success btn-sm"><i class="fa fa-link"></i><a>produkty</a></button>
-                                                        </form>
                                                     </td>
                                                     <td>
-
                                                     </td>
                                                 </tr>
                                                 </tbody>

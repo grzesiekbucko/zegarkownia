@@ -2,10 +2,8 @@ package pl.marko.zegarki.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import pl.marko.zegarki.entity.ZegarekNetBrand;
 import pl.marko.zegarki.entity.ZegarekNetProduct;
@@ -23,29 +21,39 @@ public class MainController {
     @Autowired
     private ZegareknetService zegareknetService;
 
-    @GetMapping("/index")
+    @GetMapping("/main")
     public String showHomePage() {
-        return "index";
+        return "mainPage";
     }
 
-    @RequestMapping(value = "/main", method = RequestMethod.GET)
+    @RequestMapping(value = "/brand", method = RequestMethod.GET)
     public ModelAndView showMainPage() {
-        ModelAndView model = new ModelAndView("mainPage");
+        ModelAndView model = new ModelAndView("brand");
         List<ZegarekNetBrand> list = zegareknetService.getZegaNetBrand();
         model.addObject("zegarekNetBrand", list);
         return zegareknetService.updateTimestamp(model);
     }
 
-    @RequestMapping(value = "/list", method = RequestMethod.GET)
+    @RequestMapping(value = "/update_brands", method = RequestMethod.GET)
     public String watchList() throws IOException {
         zegareknetService.saveBrandList();
-        return "redirect:/main";
+        return "redirect:/brand";
     }
 
-    @RequestMapping(value = "/links", method = RequestMethod.POST)
+    @RequestMapping(value = "/products", method = RequestMethod.POST)
     public String getLinks(@RequestParam String html, ZegarekNetBrand brand) throws IOException {
         zegareknetService.saveProduktLinks(html, brand);
-        return "redirect:/main";
+        String brandName = brand.getBrand();
+        return "redirect:/products/" + brandName;
+    }
+
+    @RequestMapping(value = "/products/{id}", method = RequestMethod.GET)
+    public ModelAndView deleteIncome(@PathVariable(value = "id") ZegarekNetBrand id) {
+        ModelAndView productsModel = new ModelAndView("products");
+        List<ZegarekNetProduct> productList = zegareknetService.getZegaNetProducts(id);
+        productsModel.addObject("zegarekNetProd", productList);
+        productsModel.addObject("productBrandName", id.getBrand());
+        return productsModel;
     }
 
 

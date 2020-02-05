@@ -1,6 +1,9 @@
 package pl.marko.zegarki.entity;
 
+import org.hibernate.annotations.UpdateTimestamp;
+
 import javax.persistence.*;
+import java.util.Date;
 
 @Entity(name="ZegarekNetProduct")
 @Table(name = "zegarek_net_product")
@@ -11,11 +14,16 @@ public class ZegarekNetProduct {
     private String productKod;
 
     @ManyToOne
-    @JoinColumn(name = "productBrand_brand")
+    @JoinColumn(name = "productBrand")
     private ZegarekNetBrand productBrand;
 
     @Column(name="product_link")
     private String productLink;
+
+    @UpdateTimestamp
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "update_date")
+    private Date updateDate;
 
     public ZegarekNetProduct(String productKod, String productLink, ZegarekNetBrand productBrand) {
         this.productKod = productKod;
@@ -24,6 +32,14 @@ public class ZegarekNetProduct {
     }
 
     public ZegarekNetProduct() {
+    }
+
+    public Date getUpdateDate() {
+        return updateDate;
+    }
+
+    public void setUpdateDate(Date updateDate) {
+        this.updateDate = updateDate;
     }
 
     public String getProductKod() {
