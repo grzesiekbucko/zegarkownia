@@ -28,7 +28,7 @@ public class MainController {
 
     @RequestMapping(value = "/brand", method = RequestMethod.GET)
     public ModelAndView showMainPage() {
-        ModelAndView model = new ModelAndView("brand");
+        ModelAndView model = new ModelAndView("zeg_net_brand_table");
         List<ZegarekNetBrand> list = zegareknetService.getZegaNetBrand();
         model.addObject("zegarekNetBrand", list);
         return zegareknetService.updateTimestamp(model);
@@ -47,14 +47,21 @@ public class MainController {
         return "redirect:/products/" + brandName;
     }
 
-    @RequestMapping(value = "/products/{id}", method = RequestMethod.GET)
-    public ModelAndView deleteIncome(@PathVariable(value = "id") ZegarekNetBrand id) {
-        ModelAndView productsModel = new ModelAndView("products");
-        List<ZegarekNetProduct> productList = zegareknetService.getZegaNetProducts(id);
+    @RequestMapping(value = "/products/{brand}", method = RequestMethod.GET)
+    public ModelAndView deleteIncome(@PathVariable(value = "brand") ZegarekNetBrand brand) {
+        ModelAndView productsModel = new ModelAndView("zeg_net_product_table");
+        List<ZegarekNetProduct> productList = zegareknetService.getZegaNetProducts(brand);
         productsModel.addObject("zegarekNetProd", productList);
-        productsModel.addObject("productBrandName", id.getBrand());
+        productsModel.addObject("productBrandName", brand.getBrand());
         return productsModel;
     }
 
+    @RequestMapping(value = "/select_brand", method = RequestMethod.GET)
+    public ModelAndView selectbrand() {
+        ModelAndView model = new ModelAndView("zeg_net_find_product_table");
+        List<ZegarekNetBrand> list = zegareknetService.getZegaNetBrand();
+        model.addObject("zegarekNetBrand", list);
+        return model;
+    }
 
 }

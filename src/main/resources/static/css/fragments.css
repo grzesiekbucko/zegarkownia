@@ -9,3 +9,15 @@ margin-top: 50px;
 #button-group button{
 margin: 5px;
 }
+
+.ss-value{
+background-color: #26b99a !important;
+}
+
+.ss-content .ss-list .ss-option:hover {
+background-color: #26b99a !important;
+}
+
+.ss-content .ss-list .ss-optgroup-label-selectable:hover {
+    background-color: #26b99a !important;
+}
