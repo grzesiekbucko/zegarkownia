@@ -55,7 +55,6 @@ public class ZegareknetService {
     }
 
     public void saveProduktLinks(String url, ZegarekNetBrand brand) throws IOException {
-
         Document start_page = Jsoup.connect(url).get();
         Element linkClass = start_page.select(".pagination").first();
 
@@ -69,14 +68,23 @@ public class ZegareknetService {
                 String link = nameClass.attr("href");
                 String productLink = "https://www.zegarek.net" + link;
 
-                String newPrice = el.select(".new-price").text().replace(".", "");
-                String oldPrice = el.select(".old-price").text().replace(".", "");
+                if (!el.select(".old-price").text().equals("") && !el.select(".new-price").text().equals("")) {
+                    String newPrice = el.select(".new-price").text().replace(".", "").replace(" zł", "").replaceAll(",", ".");
+                    BigDecimal newPriceDouble = new BigDecimal(newPrice);
 
-                BigDecimal newPriceDouble = new BigDecimal(newPrice.replaceAll(",", "."));
-                BigDecimal oldPriceDouble = new BigDecimal(oldPrice.replaceAll(",", "."));
+                    String oldPrice = el.select(".old-price").text().replace(".", "").replace(" zł", "").replaceAll(",", ".");
+                    BigDecimal oldPriceDouble = new BigDecimal(oldPrice);
 
-                ZegarekNetProduct product = new ZegarekNetProduct(productKod, brand, productLink, newPriceDouble);
-                zegarekNetProductRepository.save(product);
+                    ZegarekNetProduct product = new ZegarekNetProduct(productKod, brand, productLink, newPriceDouble, oldPriceDouble);
+                    zegarekNetProductRepository.save(product);
+
+                } else if (el.select(".old-price").text().equals("") && !el.select(".new-price").text().equals("")) {
+                    String newPrice = el.select(".new-price").text().replace(".", "").replace(" zł", "").replaceAll(",", ".");
+                    BigDecimal newPriceDouble = new BigDecimal(newPrice);
+
+                    ZegarekNetProduct product = new ZegarekNetProduct(productKod, brand, productLink, newPriceDouble);
+                    zegarekNetProductRepository.save(product);
+                }
             }
         } else {
             Elements link_class = start_page.select(".pagination").select("a");
@@ -95,28 +103,26 @@ public class ZegareknetService {
                     String link = nameClass.attr("href");
                     String productLink = "https://www.zegarek.net" + link;
 
-                    if(el.hasClass(".new-price") && el.hasClass(".old-price")){
+                    if (!el.select(".old-price").text().equals("") && !el.select(".new-price").text().equals("")) {
 
-                        String newPrice = el.select(".new-price").text().replace(".", "").replace(" zł", "");
-                        BigDecimal newPriceDouble = new BigDecimal(newPrice.replaceAll(",", "."));
+                        String newPrice = el.select(".new-price").text().replace(".", "").replace(" zł", "").replaceAll(",", ".");
+                        BigDecimal newPriceDouble = new BigDecimal(newPrice);
 
-                        String oldPrice = el.select(".old-price").text().replace(".", "").replace(" zł", "");
-
-                        BigDecimal oldPriceDouble = new BigDecimal(oldPrice.replaceAll(",", "."));
+                        String oldPrice = el.select(".old-price").text().replace(".", "").replace(" zł", "").replaceAll(",", ".");
+                        BigDecimal oldPriceDouble = new BigDecimal(oldPrice);
 
                         ZegarekNetProduct product = new ZegarekNetProduct(productKod, brand, productLink, newPriceDouble, oldPriceDouble);
                         zegarekNetProductRepository.save(product);
 
-                    } else {
-                        String newPrice = el.select(".new-price").text().replace(".", "").replace(" zł", "");
-                        BigDecimal newPriceDouble = new BigDecimal(newPrice.replaceAll(",", "."));
+                    } else if (el.select(".old-price").text().equals("") && !el.select(".new-price").text().equals("")) {
+                        String newPrice = el.select(".new-price").text().replace(".", "").replace(" zł", "").replaceAll(",", ".");
+                        BigDecimal newPriceDouble = new BigDecimal(newPrice);
 
-                       ZegarekNetProduct product = new ZegarekNetProduct(productKod, brand, productLink, newPriceDouble);
-                       zegarekNetProductRepository.save(product);
-                   }
-
-
+                        ZegarekNetProduct product = new ZegarekNetProduct(productKod, brand, productLink, newPriceDouble);
+                        zegarekNetProductRepository.save(product);
+                    }
                 }
+
             }
         }
     }

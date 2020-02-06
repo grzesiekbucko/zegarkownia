@@ -102,8 +102,8 @@
                                                     <th>Kod</th>
                                                     <th>Link</th>
                                                     <th>Cena</th>
-                                                    <th>Cena promocyjna</th>
-                                                    <th>Rabat</th>
+                                                    <th>Cena katalogowa</th>
+                                                    <th>Promocja</th>
                                                     <th>Aktualizacja</th>
                                                 </tr>
                                                 </thead>
@@ -112,20 +112,17 @@
                                                     <td th:text="${iStat.count}"></td>
                                                     <td><a th:text="${product.productKod}"></a>
                                                     </td>
-                                                    <td>
-                                                        <a th:text="@{${product.productLink}}"
+                                                    <td><a th:text="@{${product.productLink}}"
                                                            th:href="@{${product.productLink}}"></a>
                                                     </td>
+                                                    <td th:text="${product.newPrice}"></td>
+                                                    <td th:text="${product.oldPrice}"></td>
                                                     <td>
-                                                    </td>
-                                                    <td>
-                                                    </td>
-                                                    <td>
+
                                                     </td>
                                                     <td th:text="${#dates.format(product.updateDate, 'dd-MM-yyyy HH:mm:ss')}">
                                                     </td >
                                                 </tr>
-
                                                 </tbody>
                                             </table>
                                         </div>
