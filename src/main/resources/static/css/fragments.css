@@ -21,3 +21,7 @@ background-color: #26b99a !important;
 .ss-content .ss-list .ss-optgroup-label-selectable:hover {
     background-color: #26b99a !important;
 }
+a:not([href]):hover {
+    color: white;
+    text-decoration: none;
+}

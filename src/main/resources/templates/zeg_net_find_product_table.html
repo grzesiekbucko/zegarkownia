@@ -98,18 +98,30 @@
                                     <div class="col-sm-12">
                                         <div class="card-box table-responsive">
 
-                                            <div class="row">
+                                            <form action="#" th:action="@{/search_brand}" style="margin-right: 10px" >
+
+                                            <div class="row" style="width: 100%; padding-left: 15px;">
+
+
                                                 <select class="col-sm-5" id="zeg_net_select_brand" multiple>
                                                     <optgroup label="All">
-                                                    <option  th:each="product : ${zegarekNetBrand}"  th:value="${product.brand}" th:text="${product.brand}">1</option>
-
+                                                        <option th:each="product : ${zegarekNetBrand}"
+                                                                th:value="${product.brand}"
+                                                                th:text="${product.brand}"></option>
                                                     </optgroup>
                                                 </select>
 
-                                                <form action="#" th:action="@{/select_brand}">
-                                                    <button type="submit" class="btn btn-success btn-sm source col-sm">wyczyść</button>
-                                                </form>
+                                                    <a th:href="@{/select_brand}"
+                                                            class="btn btn-success btn-sm"><i
+                                                            class="fa fa-trash-o"></i>
+                                                    </a>
+
+                                                    <button id="search_button" th:action="@{/select_brand}" type="button" class="btn btn-success btn-sm">
+                                                        <i class="fa fa-search"></i> szukaj
+                                                    </button>
+
                                             </div>
+                                            </form>
 
                                             <table id="datatable-buttons" class="table table-striped table-bordered"
                                                    style="width:100%">
