@@ -98,10 +98,7 @@
                                     <div class="col-sm-12">
                                         <div class="card-box table-responsive">
 
-                                            <form action="#" th:action="@{/search_brand}" style="margin-right: 10px" >
-
-                                            <div class="row" style="width: 100%; padding-left: 15px;">
-
+                                            <div class="row" style="width: 100%; padding-left: 15px; margin-top:5px;">
 
                                                 <select class="col-sm-5" id="zeg_net_select_brand" multiple>
                                                     <optgroup label="All">
@@ -110,24 +107,29 @@
                                                                 th:text="${product.brand}"></option>
                                                     </optgroup>
                                                 </select>
-
+                                                <p>
                                                     <a th:href="@{/select_brand}"
                                                             class="btn btn-success btn-sm"><i
                                                             class="fa fa-trash-o"></i>
                                                     </a>
-
-                                                    <button id="search_button" th:action="@{/select_brand}" type="button" class="btn btn-success btn-sm">
+                                                </p>
+                                                <form th:action="@{/show_selected_brand}" method="post">
+                                                    <input id="input_selectedBrand" type="hidden" name="selectedBrand" th:value="${selectedBrand}"/>
+                                                    <button id="search_button" name="" type="submit" class="btn btn-success btn-sm">
                                                         <i class="fa fa-search"></i> szukaj
                                                     </button>
-
+                                                </form>
                                             </div>
-                                            </form>
+
+                                            <p th:text="${test}"></p>
+
 
                                             <table id="datatable-buttons" class="table table-striped table-bordered"
                                                    style="width:100%">
                                                 <thead>
                                                 <tr>
                                                     <th>#</th>
+                                                    <th>Marka</th>
                                                     <th>Kod</th>
                                                     <th>Link</th>
                                                     <th>Cena</th>
@@ -137,19 +139,18 @@
                                                 </tr>
                                                 </thead>
                                                 <tbody>
-                                                <tr th:each="product, iStat : ${zegarekNetProd}">
+                                                <tr th:each="prod, iStat : ${zegarekNetProd}">
                                                     <td th:text="${iStat.count}"></td>
-                                                    <td><a th:text="${product.productKod}"></a>
+                                                    <td><a th:text="${prod.productBrand.brand}"></a>
+                                                    <td><a th:text="${prod.productKod}"></a>
                                                     </td>
-                                                    <td><a th:text="@{${product.productLink}}"
-                                                           th:href="@{${product.productLink}}"></a>
+                                                    <td><a th:text="@{${prod.productLink}}"
+                                                           th:href="@{${prod.productLink}}"></a>
                                                     </td>
-                                                    <td th:text="${product.newPrice}"></td>
-                                                    <td th:text="${product.oldPrice}"></td>
-                                                    <td>
-
-                                                    </td>
-                                                    <td th:text="${#dates.format(product.updateDate, 'dd-MM-yyyy HH:mm:ss')}">
+                                                    <td th:text="${prod.newPrice}"></td>
+                                                    <td th:text="${prod.oldPrice}"></td>
+                                                    <td th:text="${prod.percentSale}"></td>
+                                                    <td th:text="${#dates.format(prod.updateDate, 'dd-MM-yyyy HH:mm:ss')}">
                                                     </td>
                                                 </tr>
                                                 </tbody>

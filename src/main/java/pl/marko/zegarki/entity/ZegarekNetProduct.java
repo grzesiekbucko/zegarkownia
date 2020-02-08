@@ -27,17 +27,21 @@ public class ZegarekNetProduct {
     @Column(name="old_price")
     private BigDecimal oldPrice;
 
+    @Column(name="percent_sale",columnDefinition="Decimal(6,2) default '0.00'")
+    private BigDecimal percentSale;
+
     @UpdateTimestamp
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "update_date")
     private Date updateDate;
 
-    public ZegarekNetProduct(String productKod, ZegarekNetBrand productBrand, String productLink, BigDecimal newPrice, BigDecimal oldPrice) {
+    public ZegarekNetProduct(String productKod, ZegarekNetBrand productBrand, String productLink, BigDecimal newPrice, BigDecimal oldPrice, BigDecimal percentSale) {
         this.productKod = productKod;
         this.productBrand = productBrand;
         this.productLink = productLink;
         this.newPrice = newPrice;
         this.oldPrice = oldPrice;
+        this.percentSale = percentSale;
     }
 
     public ZegarekNetProduct(String productKod, ZegarekNetBrand productBrand, String productLink, BigDecimal newPrice) {
@@ -48,6 +52,14 @@ public class ZegarekNetProduct {
     }
 
     public ZegarekNetProduct() {
+    }
+
+    public BigDecimal getPercentSale() {
+        return percentSale;
+    }
+
+    public void setPercentSale(BigDecimal percentSale) {
+        this.percentSale = percentSale;
     }
 
     public BigDecimal getNewPrice() {
@@ -96,5 +108,13 @@ public class ZegarekNetProduct {
 
     public void setProductLink(String productLink) {
         this.productLink = productLink;
+    }
+
+    @Override
+    public String toString() {
+        final StringBuilder sb = new StringBuilder("ZegarekNetProduct{");
+        sb.append("productKod='").append(productKod).append('\'');
+        sb.append('}');
+        return sb.toString();
     }
 }

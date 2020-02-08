@@ -10,12 +10,8 @@ var select = new SlimSelect({
   searchText: 'Brak wyników',
 })
 
-$("#search_button").click( function()
-           {
-             alert(select.selected());
+$("#search_button").click( function (){
+ $("#input_selectedBrand").val(select.selected());
            }
       );
-
-
-
 });

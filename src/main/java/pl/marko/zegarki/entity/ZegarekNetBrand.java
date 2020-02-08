@@ -66,4 +66,5 @@ public class ZegarekNetBrand {
         this.link = link;
     }
 
+
 }

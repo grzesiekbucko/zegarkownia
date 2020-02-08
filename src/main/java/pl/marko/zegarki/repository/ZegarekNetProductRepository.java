@@ -10,4 +10,5 @@ public interface ZegarekNetProductRepository extends CrudRepository<ZegarekNetPr
 
     List<ZegarekNetProduct> findByProductBrand(ZegarekNetBrand brand);
 
+
 }

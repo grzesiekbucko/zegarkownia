@@ -2,7 +2,6 @@ package pl.marko.zegarki.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import pl.marko.zegarki.entity.ZegarekNetBrand;
@@ -10,10 +9,9 @@ import pl.marko.zegarki.entity.ZegarekNetProduct;
 import pl.marko.zegarki.services.ZegareknetService;
 
 import java.io.IOException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
-import java.util.Map;
 
 @Controller
 public class MainController {
@@ -59,9 +57,23 @@ public class MainController {
     @RequestMapping(value = "/select_brand", method = RequestMethod.GET)
     public ModelAndView selectbrand() {
         ModelAndView model = new ModelAndView("zeg_net_find_product_table");
-        List<ZegarekNetBrand> list = zegareknetService.getZegaNetBrand();
-        model.addObject("zegarekNetBrand", list);
+        List<ZegarekNetBrand> brandList = zegareknetService.getZegaNetBrand();
+        model.addObject("zegarekNetBrand", brandList);
         return model;
     }
+
+    @RequestMapping(value = "/show_selected_brand", method = RequestMethod.POST)
+    public ModelAndView showSelected(@RequestParam String selectedBrand) {
+        ModelAndView model = new ModelAndView("zeg_net_find_product_table");
+        List<String> brandSplitedList = Arrays.asList(selectedBrand.split(","));
+
+        List<ZegarekNetBrand> brandList = zegareknetService.getZegaNetBrand();
+        ArrayList productList = zegareknetService.findByBrands(brandSplitedList);
+        model.addObject("zegarekNetProd", productList);
+        model.addObject("zegarekNetBrand", brandList);
+        return model;
+    }
+
+
 
 }

@@ -12,9 +12,9 @@ import pl.marko.zegarki.entity.ZegarekNetProduct;
 import pl.marko.zegarki.repository.ZegarekNetBrandRepository;
 import pl.marko.zegarki.repository.ZegarekNetProductRepository;
 
-import java.io.FileWriter;
 import java.io.IOException;
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -30,13 +30,23 @@ public class ZegareknetService {
     ZegarekNetProductRepository zegarekNetProductRepository;
 
     public ArrayList<ZegarekNetBrand> getZegaNetBrand() {
-        ArrayList<ZegarekNetBrand> listBrand = (ArrayList<ZegarekNetBrand>) zegarekNetBrandRepository.findAll();
-        return listBrand;
+        return (ArrayList<ZegarekNetBrand>) zegarekNetBrandRepository.findAll();
     }
 
     public ArrayList<ZegarekNetProduct> getZegaNetProducts(ZegarekNetBrand brand) {
-        ArrayList<ZegarekNetProduct> listProduct = (ArrayList<ZegarekNetProduct>) zegarekNetProductRepository.findByProductBrand(brand);
-        return listProduct;
+        return (ArrayList<ZegarekNetProduct>) zegarekNetProductRepository.findByProductBrand(brand);
+    }
+
+    public ArrayList findByBrands(List<String> brandSplitedList) {
+        List<ZegarekNetBrand> list = zegarekNetBrandRepository.findByBrandIn(brandSplitedList);
+
+        ArrayList productList = new ArrayList<>();
+
+        for (int i = 0; i < list.size(); i++) {
+            ZegarekNetBrand productList2 = (list.get(i));
+            productList.addAll(productList2.getProducts());
+        }
+        return productList;
     }
 
     public ModelAndView updateTimestamp(ModelAndView model) {
@@ -75,12 +85,16 @@ public class ZegareknetService {
                     String oldPrice = el.select(".old-price").text().replace(".", "").replace(" zł", "").replaceAll(",", ".");
                     BigDecimal oldPriceDouble = new BigDecimal(oldPrice);
 
-                    ZegarekNetProduct product = new ZegarekNetProduct(productKod, brand, productLink, newPriceDouble, oldPriceDouble);
+                    BigDecimal percent = newPriceDouble.divide(oldPriceDouble, RoundingMode.HALF_UP);
+                    BigDecimal finalPercent = (BigDecimal.valueOf(1).subtract(percent)).multiply(BigDecimal.valueOf(100));
+
+                    ZegarekNetProduct product = new ZegarekNetProduct(productKod, brand, productLink, newPriceDouble, oldPriceDouble, finalPercent);
                     zegarekNetProductRepository.save(product);
 
                 } else if (el.select(".old-price").text().equals("") && !el.select(".new-price").text().equals("")) {
                     String newPrice = el.select(".new-price").text().replace(".", "").replace(" zł", "").replaceAll(",", ".");
                     BigDecimal newPriceDouble = new BigDecimal(newPrice);
+
 
                     ZegarekNetProduct product = new ZegarekNetProduct(productKod, brand, productLink, newPriceDouble);
                     zegarekNetProductRepository.save(product);
@@ -111,7 +125,10 @@ public class ZegareknetService {
                         String oldPrice = el.select(".old-price").text().replace(".", "").replace(" zł", "").replaceAll(",", ".");
                         BigDecimal oldPriceDouble = new BigDecimal(oldPrice);
 
-                        ZegarekNetProduct product = new ZegarekNetProduct(productKod, brand, productLink, newPriceDouble, oldPriceDouble);
+                        BigDecimal percent = newPriceDouble.divide(oldPriceDouble, RoundingMode.HALF_UP);
+                        BigDecimal finalPercent = (BigDecimal.valueOf(1).subtract(percent)).multiply(BigDecimal.valueOf(100));
+
+                        ZegarekNetProduct product = new ZegarekNetProduct(productKod, brand, productLink, newPriceDouble, oldPriceDouble, finalPercent);
                         zegarekNetProductRepository.save(product);
 
                     } else if (el.select(".old-price").text().equals("") && !el.select(".new-price").text().equals("")) {
@@ -140,4 +157,6 @@ public class ZegareknetService {
             zegarekNetBrandRepository.save(brand);
         }
     }
+
+
 }
