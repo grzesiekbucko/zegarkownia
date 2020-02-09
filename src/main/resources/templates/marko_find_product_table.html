@@ -65,7 +65,7 @@
             <div class="">
                 <div class="page-title">
                     <div class="title_left">
-                        <h2>Zegarek.net</h2>
+                        <h2>Marko.pl</h2>
                     </div>
                 </div>
                 <div class="clearfix"></div>
@@ -102,18 +102,18 @@
 
                                                 <select class="col-sm-5" id="zeg_net_select_brand" multiple>
                                                     <optgroup label="All">
-                                                        <option th:each="product : ${zegarekNetBrand}"
+                                                        <option th:each="product : ${markoBrand}"
                                                                 th:value="${product.brand}"
                                                                 th:text="${product.brand}"></option>
                                                     </optgroup>
                                                 </select>
                                                 <p>
-                                                    <a th:href="@{/select_brand}"
+                                                    <a th:href="@{/marko/select_brand}"
                                                             class="btn btn-success btn-sm"><i
                                                             class="fa fa-trash-o"></i>
                                                     </a>
                                                 </p>
-                                                <form th:action="@{/show_selected_brand}" method="post">
+                                                <form th:action="@{/marko/show_selected_brand}" method="post">
                                                     <input id="input_selectedBrand" type="hidden" name="selectedBrand" th:value="${selectedBrand}"/>
                                                     <button id="search_button" name="" type="submit" class="btn btn-success btn-sm">
                                                         <i class="fa fa-search"></i> szukaj
@@ -135,11 +135,12 @@
                                                     <th>Cena</th>
                                                     <th>Cena katalogowa</th>
                                                     <th>Promocja</th>
+                                                    <th>Wysyłka</th>
                                                     <th>Aktualizacja</th>
                                                 </tr>
                                                 </thead>
                                                 <tbody>
-                                                <tr th:each="prod, iStat : ${zegarekNetProd}">
+                                                <tr th:each="prod, iStat : ${markoProd}">
                                                     <td th:text="${iStat.count}"></td>
                                                     <td th:text="${prod.productBrand.brand}"></td>
                                                     <td><a th:text="${prod.productKod}"></a></td>
@@ -149,6 +150,7 @@
                                                     <td th:text="${prod.newPrice}"></td>
                                                     <td th:text="${prod.oldPrice}"></td>
                                                     <td th:text="${prod.percentSale}"></td>
+                                                    <td th:text="${prod.shiping}"></td>
                                                     <td th:text="${#dates.format(prod.updateDate, 'dd-MM-yyyy HH:mm:ss')}">
                                                     </td>
                                                 </tr>
