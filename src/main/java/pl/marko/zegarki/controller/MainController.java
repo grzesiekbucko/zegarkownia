@@ -6,9 +6,12 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import pl.marko.zegarki.entity.ZegarekNetBrand;
 import pl.marko.zegarki.entity.ZegarekNetProduct;
+import pl.marko.zegarki.entity.marko.MarkoProduct;
+import pl.marko.zegarki.services.Marko.MarkoServices;
 import pl.marko.zegarki.services.ZegareknetService;
 
 import java.io.IOException;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -19,9 +22,26 @@ public class MainController {
     @Autowired
     private ZegareknetService zegareknetService;
 
-    @GetMapping("/main")
-    public String showHomePage() {
-        return "mainPage";
+    @Autowired
+    private MarkoServices markoServices;
+
+    @GetMapping("/")
+    public ModelAndView showHomePage() {
+        ModelAndView model = new ModelAndView("mainPage");
+        Integer brandCount = markoServices.getMarkoBrand().size();
+        Integer productCount = markoServices.getMarkoProduct().size();
+        Integer shiping5dni = markoServices.getMarkoProductShiping("5 dni").size();
+        Integer shiping24godz = markoServices.getMarkoProductShiping("24 godziny").size();
+        List <MarkoProduct> productList = markoServices.getComparedProduct();
+
+        model.addObject("brand_counter", brandCount);
+        model.addObject("product_counter", productCount);
+        model.addObject("product_5dni", shiping5dni);
+        model.addObject("product_24godziny", shiping24godz);
+        model.addObject("percent_5dni", markoServices.getPercent(shiping5dni, productCount));
+        model.addObject("percent_24godziny", markoServices.getPercent(shiping24godz, productCount));
+        model.addObject("product_list", productList);
+        return model;
     }
 
     @RequestMapping(value = "/brand", method = RequestMethod.GET)
@@ -73,7 +93,6 @@ public class MainController {
         model.addObject("zegarekNetBrand", brandList);
         return model;
     }
-
 
 
 }

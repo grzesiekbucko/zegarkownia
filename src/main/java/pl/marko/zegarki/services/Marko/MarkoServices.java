@@ -6,6 +6,7 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import pl.marko.zegarki.entity.marko.MarkoBrand;
 import pl.marko.zegarki.entity.marko.MarkoProduct;
 import pl.marko.zegarki.repository.Marko.MarkoBrandRepository;
@@ -14,6 +15,7 @@ import pl.marko.zegarki.repository.Marko.MarkoProductRepository;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -30,6 +32,23 @@ public class MarkoServices {
         return (ArrayList<MarkoBrand>) markoBrandRepository.findAll();
     }
 
+    public ArrayList<MarkoProduct> getMarkoProduct() {
+        return (ArrayList<MarkoProduct>) markoProductRepository.findAll();
+    }
+
+    public ArrayList<MarkoProduct> getMarkoProductShiping(String shiping) {
+        return (ArrayList<MarkoProduct>) markoProductRepository.findProductByShiping(shiping);
+    }
+
+    public  ArrayList<MarkoProduct> getComparedProduct(){
+        return (ArrayList<MarkoProduct>) markoProductRepository.findProductByKod();
+    }
+
+    public String getPercent(Integer a, Integer total){
+        DecimalFormat formatter = new DecimalFormat("#0.00");
+        double percent = ((double)a / (double)total)*100;
+        return formatter.format(percent);
+    }
 
     public List<MarkoBrand> saveBrandList() throws IOException {
         Document linkDoc = Jsoup.connect("https://www.marko.pl/zegarki.html").get();
@@ -49,7 +68,6 @@ public class MarkoServices {
             markoBrandsList.add(brand);
         }return markoBrandsList;
     }
-
 
 
     public ArrayList findByBrands(List<String> brandSplitedList) {

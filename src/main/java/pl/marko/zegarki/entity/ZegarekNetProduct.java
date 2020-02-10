@@ -21,8 +21,8 @@ public class ZegarekNetProduct {
     @Column(name="product_link")
     private String productLink;
 
-    @Column(name="new_price")
-    private BigDecimal newPrice;
+    @Column(name="zegarek_net_new_price")
+    private BigDecimal zegarek_net_new_price;
 
     @Column(name="old_price")
     private BigDecimal oldPrice;
@@ -35,20 +35,20 @@ public class ZegarekNetProduct {
     @Column(name = "update_date")
     private Date updateDate;
 
-    public ZegarekNetProduct(String productKod, ZegarekNetBrand productBrand, String productLink, BigDecimal newPrice, BigDecimal oldPrice, BigDecimal percentSale) {
+    public ZegarekNetProduct(String productKod, ZegarekNetBrand productBrand, String productLink, BigDecimal zegarek_net_new_price, BigDecimal oldPrice, BigDecimal percentSale) {
         this.productKod = productKod;
         this.productBrand = productBrand;
         this.productLink = productLink;
-        this.newPrice = newPrice;
+        this.zegarek_net_new_price = zegarek_net_new_price;
         this.oldPrice = oldPrice;
         this.percentSale = percentSale;
     }
 
-    public ZegarekNetProduct(String productKod, ZegarekNetBrand productBrand, String productLink, BigDecimal newPrice) {
+    public ZegarekNetProduct(String productKod, ZegarekNetBrand productBrand, String productLink, BigDecimal zegarek_net_new_price) {
         this.productKod = productKod;
         this.productBrand = productBrand;
         this.productLink = productLink;
-        this.newPrice = newPrice;
+        this.zegarek_net_new_price = zegarek_net_new_price;
     }
 
     public ZegarekNetProduct() {
@@ -62,12 +62,12 @@ public class ZegarekNetProduct {
         this.percentSale = percentSale;
     }
 
-    public BigDecimal getNewPrice() {
-        return newPrice;
+    public BigDecimal getZegarek_net_new_price() {
+        return zegarek_net_new_price;
     }
 
-    public void setNewPrice(BigDecimal newPrice) {
-        this.newPrice = newPrice;
+    public void setZegarek_net_new_price(BigDecimal zegarek_net_new_price) {
+        this.zegarek_net_new_price = zegarek_net_new_price;
     }
 
     public BigDecimal getOldPrice() {
