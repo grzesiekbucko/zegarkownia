@@ -7,6 +7,7 @@ import org.jsoup.select.Elements;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import pl.marko.zegarki.entity.ProductJoin;
 import pl.marko.zegarki.entity.marko.MarkoBrand;
 import pl.marko.zegarki.entity.marko.MarkoProduct;
 import pl.marko.zegarki.repository.Marko.MarkoBrandRepository;
@@ -40,8 +41,8 @@ public class MarkoServices {
         return (ArrayList<MarkoProduct>) markoProductRepository.findProductByShiping(shiping);
     }
 
-    public  ArrayList<MarkoProduct> getComparedProduct(){
-        return (ArrayList<MarkoProduct>) markoProductRepository.findProductByKod();
+    public  ArrayList<ProductJoin> getComparedProduct(){
+        return (ArrayList<ProductJoin>) markoProductRepository.join();
     }
 
     public String getPercent(Integer a, Integer total){
