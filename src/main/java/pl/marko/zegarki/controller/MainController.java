@@ -8,6 +8,8 @@ import pl.marko.zegarki.entity.ProductJoin;
 import pl.marko.zegarki.entity.ZegarekNetBrand;
 import pl.marko.zegarki.entity.ZegarekNetProduct;
 import pl.marko.zegarki.entity.marko.MarkoProduct;
+import pl.marko.zegarki.entity.marko.ProductJoinInterface;
+import pl.marko.zegarki.repository.Marko.MarkoProductRepository;
 import pl.marko.zegarki.services.Marko.MarkoServices;
 import pl.marko.zegarki.services.ZegareknetService;
 
@@ -33,15 +35,15 @@ public class MainController {
         Integer productCount = markoServices.getMarkoProduct().size();
         Integer shiping5dni = markoServices.getMarkoProductShiping("5 dni").size();
         Integer shiping24godz = markoServices.getMarkoProductShiping("24 godziny").size();
-        List <ProductJoin> productList = markoServices.getComparedProduct();
-        System.out.println(productList);
+        List <ProductJoinInterface> productList = markoServices.getComparedProduct();
+
         model.addObject("brand_counter", brandCount);
         model.addObject("product_counter", productCount);
         model.addObject("product_5dni", shiping5dni);
         model.addObject("product_24godziny", shiping24godz);
         model.addObject("percent_5dni", markoServices.getPercent(shiping5dni, productCount));
         model.addObject("percent_24godziny", markoServices.getPercent(shiping24godz, productCount));
-  //      model.addObject("product_list", productList);
+        model.addObject("product_list", productList);
         return model;
     }
 

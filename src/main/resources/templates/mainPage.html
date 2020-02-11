@@ -136,13 +136,14 @@
                                                 <tbody>
                                                 <tr th:each="product, iStat : ${product_list}">
                                                     <td th:text="${iStat.count}"></td>
-                                                    <td th:text="${product.productBrand.brand}"></td>
+                                                    <td th:text="${product.productBrand}"></td>
                                                     <td th:text="${product.productKod}"></td>
                                                     <td th:text="${product.newPrice}"></td>
                                                     <td th:text="${product.percentSale}"></td>
                                                     <td th:text="${product.shiping}"></td>
-                                                    <td th:text="${product.zegarek_net_new_price}"></td>
-                                                    <td ></td>
+                                                    <td th:text="${product.zegarekNetNewPrice}"></td>
+                                                    <td th:text="${product.zegarekNetPercentSale}"></td>
+
                                                 </tr>
                                                 </tbody>
                                             </table>
