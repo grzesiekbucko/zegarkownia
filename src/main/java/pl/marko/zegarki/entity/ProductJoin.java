@@ -9,8 +9,10 @@ public class ProductJoin implements java.io.Serializable {
     private String shiping;
     private String zegarekNetNewPrice;
     private String zegarekNetPercentSale;
+    private String markoLink;
+    private String zegarekNetLink;
 
-    public ProductJoin(String productBrand, String productKod, String newPrice, String percentSale, String shiping, String zegarekNetNewPrice, String zegarekNetPercentSale) {
+    public ProductJoin(String productBrand, String productKod, String newPrice, String percentSale, String shiping, String zegarekNetNewPrice, String zegarekNetPercentSale, String markoLink, String zegarekNetLink) {
         this.productBrand = productBrand;
         this.productKod = productKod;
         this.newPrice = newPrice;
@@ -18,9 +20,31 @@ public class ProductJoin implements java.io.Serializable {
         this.shiping = shiping;
         this.zegarekNetNewPrice = zegarekNetNewPrice;
         this.zegarekNetPercentSale = zegarekNetPercentSale;
+        this.markoLink = markoLink;
+        this.zegarekNetLink = zegarekNetLink;
     }
 
     public ProductJoin() {
+    }
+
+    public void setZegarekNetPercentSale(String zegarekNetPercentSale) {
+        this.zegarekNetPercentSale = zegarekNetPercentSale;
+    }
+
+    public String getMarkoLink() {
+        return markoLink;
+    }
+
+    public void setMarkoLink(String markoLink) {
+        this.markoLink = markoLink;
+    }
+
+    public String getZegarekNetLink() {
+        return zegarekNetLink;
+    }
+
+    public void setZegarekNetLink(String zegarekNetLink) {
+        this.zegarekNetLink = zegarekNetLink;
     }
 
     public String getPercentSale() {

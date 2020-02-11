@@ -1,4 +1,4 @@
-package pl.marko.zegarki.services;
+package pl.marko.zegarki.services.ZegarekNet;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -7,10 +7,10 @@ import org.jsoup.select.Elements;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.ModelAndView;
-import pl.marko.zegarki.entity.ZegarekNetBrand;
-import pl.marko.zegarki.entity.ZegarekNetProduct;
-import pl.marko.zegarki.repository.ZegarekNetBrandRepository;
-import pl.marko.zegarki.repository.ZegarekNetProductRepository;
+import pl.marko.zegarki.entity.ZegarekNet.ZegarekNetBrand;
+import pl.marko.zegarki.entity.ZegarekNet.ZegarekNetProduct;
+import pl.marko.zegarki.repository.ZegarekNet.ZegarekNetBrandRepository;
+import pl.marko.zegarki.repository.ZegarekNet.ZegarekNetProductRepository;
 
 import java.io.IOException;
 import java.math.BigDecimal;
@@ -37,11 +37,13 @@ public class ZegareknetService {
         return (ArrayList<ZegarekNetProduct>) zegarekNetProductRepository.findByProductBrand(brand);
     }
 
+    public ArrayList<ZegarekNetProduct> getAllProductsZegarekNet() {
+        return (ArrayList<ZegarekNetProduct>) zegarekNetProductRepository.findAll();
+    }
+
     public ArrayList findByBrands(List<String> brandSplitedList) {
         List<ZegarekNetBrand> list = zegarekNetBrandRepository.findByBrandIn(brandSplitedList);
-
         ArrayList productList = new ArrayList<>();
-
         for (int i = 0; i < list.size(); i++) {
             ZegarekNetBrand productList2 = (list.get(i));
             productList.addAll(productList2.getProducts());
@@ -60,7 +62,6 @@ public class ZegareknetService {
             String date = simpleDateFormat.format(list.get(list.size() - 1).getUpdateDate());
             model.addObject("update_date", date);
         }
-
         return model;
     }
 
@@ -144,10 +145,12 @@ public class ZegareknetService {
         }
     }
 
-    public void saveBrandList() throws IOException {
+    public List<ZegarekNetBrand> saveBrandList() throws IOException {
         Document linkDoc = Jsoup.connect("https://www.zegarek.net/sitemap.php").get();
         Element className = linkDoc.select(".sitemaps").first();
         Elements productLink = className.select("a");
+
+        List<ZegarekNetBrand> markoBrandsList = new ArrayList<>();
 
         for (Element el : productLink) {
             String name = el.select("a").text().replace("Zegarki ", "");
@@ -155,7 +158,9 @@ public class ZegareknetService {
 
             ZegarekNetBrand brand = new ZegarekNetBrand(name, link);
             zegarekNetBrandRepository.save(brand);
-        }
+            System.out.println("zapisano do bazy " + name);
+            markoBrandsList.add(brand);
+        }return markoBrandsList;
     }
 
 

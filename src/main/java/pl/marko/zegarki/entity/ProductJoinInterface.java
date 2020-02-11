@@ -1,4 +1,4 @@
-package pl.marko.zegarki.entity.marko;
+package pl.marko.zegarki.entity;
 
 import java.math.BigDecimal;
 
@@ -11,5 +11,7 @@ public interface ProductJoinInterface {
     String getShiping();
     String getZegarekNetNewPrice();
     String getZegarekNetPercentSale();
+    String getMarkoLink();
+    String getZegarekNetLink();
 
 }

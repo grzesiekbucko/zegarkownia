@@ -6,10 +6,9 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import pl.marko.zegarki.entity.ProductJoin;
 import pl.marko.zegarki.entity.marko.MarkoBrand;
 import pl.marko.zegarki.entity.marko.MarkoProduct;
-import pl.marko.zegarki.entity.marko.ProductJoinInterface;
+import pl.marko.zegarki.entity.ProductJoinInterface;
 import pl.marko.zegarki.repository.Marko.MarkoBrandRepository;
 import pl.marko.zegarki.repository.Marko.MarkoProductRepository;
 

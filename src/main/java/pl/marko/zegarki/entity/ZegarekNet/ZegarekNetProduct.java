@@ -1,4 +1,4 @@
-package pl.marko.zegarki.entity;
+package pl.marko.zegarki.entity.ZegarekNet;
 
 import org.hibernate.annotations.UpdateTimestamp;
 

@@ -6,7 +6,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
-import pl.marko.zegarki.entity.ZegarekNetBrand;
 import pl.marko.zegarki.entity.marko.MarkoBrand;
 import pl.marko.zegarki.services.Marko.MarkoServices;
 
