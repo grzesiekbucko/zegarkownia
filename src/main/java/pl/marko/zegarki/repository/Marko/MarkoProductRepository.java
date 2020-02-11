@@ -2,13 +2,11 @@ package pl.marko.zegarki.repository.Marko;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Repository;
-import pl.marko.zegarki.entity.ProductJoin;
 import pl.marko.zegarki.entity.marko.MarkoProduct;
-import pl.marko.zegarki.entity.marko.ProductJoinInterface;
+import pl.marko.zegarki.entity.ProductJoinInterface;
 
 import java.util.List;
 
@@ -26,12 +24,14 @@ public interface MarkoProductRepository extends JpaRepository<MarkoProduct, Stri
 //    List<MarkoProduct> findProductByKod();
 
 
-    @Query(value = "SELECT p.product_brand AS productBrand, p.kod AS productKod, p.new_price AS newPrice, p.percent_sale AS percentSale, p.shiping AS shiping, c.zegarek_net_new_price AS zegarekNetNewPrice, \n" +
-            "c.percent_sale AS zegarekNetPercentSale \n" +
+    @Query(value = "SELECT p.product_brand AS productBrand, p.kod AS productKod, p.new_price AS newPrice, p.percent_sale AS percentSale, p.shiping AS shiping, \n" +
+            "c.zegarek_net_new_price AS zegarekNetNewPrice, \n" +
+            "c.percent_sale AS zegarekNetPercentSale, \n" +
+            "p.product_link AS markoLink, c.product_link AS zegarekNetLink \n" +
             "FROM marko_product p\n" +
             "JOIN zegarek_net_product c\n" +
             "ON p.kod = c.kod \n" +
-            "WHERE p.new_price != c.zegarek_net_new_price", nativeQuery = true)
+            "WHERE p.new_price > c.zegarek_net_new_price", nativeQuery = true)
     List<ProductJoinInterface> findAllDtoBy();
 
 }

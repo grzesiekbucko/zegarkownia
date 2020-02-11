@@ -8,7 +8,7 @@ import java.util.Date;
 
 @Entity(name="MarkoProduct")
 @Table(name = "marko_product")
-public class MarkoProduct {
+public class MarkoProduct implements java.io.Serializable {
 
     @Id
     @Column(name="kod", unique=true)
