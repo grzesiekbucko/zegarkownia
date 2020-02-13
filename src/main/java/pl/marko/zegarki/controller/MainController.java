@@ -5,9 +5,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.servlet.ModelAndView;
 import pl.marko.zegarki.entity.ProductJoinInterface;
+import pl.marko.zegarki.entity.marko.MarkoBrand;
+import pl.marko.zegarki.entity.marko.MarkoProduct;
 import pl.marko.zegarki.services.Marko.MarkoServices;
 import pl.marko.zegarki.services.ZegarekNet.ZegareknetService;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -27,8 +30,15 @@ public class MainController {
         Integer shiping24godz = markoServices.getMarkoProductShiping("24 godziny").size();
         List <ProductJoinInterface> productList = markoServices.getComparedProduct();
         Integer worstPriceCounter = markoServices.getComparedProduct().size();
+        ArrayList<String> brand_list = markoServices.getmarkoBrandName();
 
-        model.addObject("brand_counter", markoServices.getMarkoBrand().size());
+        List<MarkoBrand> brandList = markoServices.getMarkoBrand();
+        System.out.println("brand: " + brandList.get(0).getBrand() + ", size: " + brandList.get(0).getProducts().size());
+
+
+        model.addObject("brand_counter", brand_list.size());
+        model.addObject("brand_list", "testdfgjdfk jghfdkjg djfgnkd");
+        model.addObject("brand_list_name", brand_list);
         model.addObject("product_counter", productCount);
         model.addObject("product_5dni", shiping5dni);
         model.addObject("product_24godziny", shiping24godz);

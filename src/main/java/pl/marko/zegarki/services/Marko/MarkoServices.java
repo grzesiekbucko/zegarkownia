@@ -32,6 +32,13 @@ public class MarkoServices {
         return (ArrayList<MarkoBrand>) markoBrandRepository.findAll();
     }
 
+    public ArrayList<String> getmarkoBrandName(){
+        ArrayList<String> listName = new ArrayList<>();
+        for(MarkoBrand name :getMarkoBrand() ){
+            listName.add(name.getBrand());
+        }return listName;
+    }
+
     public ArrayList<MarkoProduct> getMarkoProduct() {
         return (ArrayList<MarkoProduct>) markoProductRepository.findAll();
     }
@@ -77,7 +84,6 @@ public class MarkoServices {
 
     public ArrayList findByBrands(List<String> brandSplitedList) {
         List<MarkoBrand> list = markoBrandRepository.findByBrandIn(brandSplitedList);
-
         ArrayList productList = new ArrayList<>();
 
         for (int i = 0; i < list.size(); i++) {
