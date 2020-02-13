@@ -42,6 +42,7 @@ public class MarkoController {
 
     @RequestMapping(value = "/marko/update_all", method = RequestMethod.GET)
     public String updateAll() throws IOException {
+        markoServices.deleteAllMarkoProducts();
         List<MarkoBrand> brandList = markoServices.saveBrandList();
         for (MarkoBrand list : brandList) {
             String html = list.getLink();

@@ -33,6 +33,11 @@ public class ZegareknetService {
         return (ArrayList<ZegarekNetBrand>) zegarekNetBrandRepository.findAll();
     }
 
+    public void deleteAllZegarekNetProducts(){
+        zegarekNetProductRepository.deleteAll();
+        zegarekNetProductRepository.flush();
+    }
+
     public ArrayList<ZegarekNetProduct> getZegaNetProducts(ZegarekNetBrand brand) {
         return (ArrayList<ZegarekNetProduct>) zegarekNetProductRepository.findByProductBrand(brand);
     }

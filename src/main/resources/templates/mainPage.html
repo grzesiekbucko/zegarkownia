@@ -78,12 +78,12 @@
                             <div class="count" th:text="' ' + ${product_5dni}"></div>
                             <span class="count_bottom"><i class="green" th:text="' ' + ${percent_5dni}+'%'"></i></span>
                         </div>
-                        <div class="col-md-3  tile_stats_count">
+                        <div class="col-md-2  tile_stats_count">
                             <span class="count_top"><i class="fa fa-tag"></i> producentów</span>
                             <div class="count" th:text="' '+${brand_counter}"></div>
                             <span class="count_bottom"> marko.pl</span>
                         </div>
-                        <div class="col-md-1  tile_stats_count">
+                        <div class="col-md-2  tile_stats_count">
                             <span class="count_top"><i class="fa fa-clock-o"></i> ilość zegarków</span>
                             <div class="count" th:text="${zegarek_net_product_counter}"></div>
                             <span class="count_bottom"> zegarek.net</span>
@@ -130,10 +130,11 @@
                             <div class="x_content">
                                 <canvas id="brandChart"></canvas>
                             </div>
-
                         </div>
                     </div>
                 </div>
+                <button id="chartButton">CHART </button>
+                <button id="chartDelete2">Delete</button>
                 <!-- /chart -->
                 <div class="row">
                     <div class="col-md-12 col-sm-12 ">
@@ -238,7 +239,7 @@
 <script type="text/javascript" src="../static/js/custom.min.js" th:src="@{/js/custom.min.js}"></script>
 
 <!-- Chart.js -->
-<script src="../static/js/Chart.min.js" th:src="@{/js/Chart.min.js}"></script>
+<script type="text/javascript" src="../static/js/Chart.min.js" th:src="@{/js/Chart.min.js}"></script>
 
 <!-- Fragments -->
 <script type="text/javascript" src="../static/js/fragments.js" th:src="@{/js/fragments.js}"></script>

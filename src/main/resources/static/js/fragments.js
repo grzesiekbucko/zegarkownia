@@ -1,5 +1,22 @@
 $(document).ready(function(){
-var ctx = document.getElementById('brandChart');
+
+var select = new SlimSelect({
+  select: '#zeg_net_select_brand',
+  placeholder: 'Wybierz marki do porównania',
+  selectByGroup: true,
+  hideSelectedOption: true,
+  closeOnSelect: false,
+  searchText: 'Brak wyników',
+});
+
+$("#search_button").click( function (){
+ $("#input_selectedBrand").val(select.selected());
+           }
+      );
+});
+
+$('#chartButton').click(function(){
+var ctx = document.getElementById('brandChart').getContext('2d');
 var myChart = new Chart(ctx, {
     type: 'bar',
     data: {
@@ -37,23 +54,14 @@ var myChart = new Chart(ctx, {
     }
 });
 
+$('#chartDelete2').click(function(){
+
+myChart.destroy();
+
 });
 
-$(document).ready(function(){
-
-var select = new SlimSelect({
-  select: '#zeg_net_select_brand',
-  placeholder: 'Wybierz marki do porównania',
-  selectByGroup: true,
-  hideSelectedOption: true,
-  closeOnSelect: false,
-  searchText: 'Brak wyników',
 });
 
 
-$("#search_button").click( function (){
- $("#input_selectedBrand").val(select.selected());
-           }
-      );
 
-});
+

@@ -38,6 +38,7 @@ public class zegarekNetController {
 
     @RequestMapping(value = "/zegarek_net/update_all", method = RequestMethod.GET)
     public String updateAll() throws IOException {
+        zegareknetService.deleteAllZegarekNetProducts();
         List<ZegarekNetBrand> brandList = zegareknetService.saveBrandList();
 
         for (ZegarekNetBrand list : brandList) {

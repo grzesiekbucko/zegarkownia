@@ -44,6 +44,11 @@ public class MarkoServices {
         return (ArrayList<ProductJoinInterface>) markoProductRepository.findAllDtoBy();
     }
 
+    public void deleteAllMarkoProducts(){
+        markoProductRepository.deleteAll();
+        markoProductRepository.flush();
+    }
+
     public String getPercent(Integer a, Integer total){
         DecimalFormat formatter = new DecimalFormat("#0.00");
         double percent = ((double)a / (double)total)*100;
