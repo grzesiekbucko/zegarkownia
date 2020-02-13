@@ -108,12 +108,12 @@
                                                     </optgroup>
                                                 </select>
                                                 <p>
-                                                    <a th:href="@{/select_brand}"
+                                                    <a th:href="@{/zegarek_net/select_brand}"
                                                             class="btn btn-success btn-sm"><i
                                                             class="fa fa-trash-o"></i>
                                                     </a>
                                                 </p>
-                                                <form th:action="@{/show_selected_brand}" method="post">
+                                                <form th:action="@{/zegarek_net/show_selected_brand}" method="post">
                                                     <input id="input_selectedBrand" type="hidden" name="selectedBrand" th:value="${selectedBrand}"/>
                                                     <button id="search_button" name="" type="submit" class="btn btn-success btn-sm">
                                                         <i class="fa fa-search"></i> szukaj

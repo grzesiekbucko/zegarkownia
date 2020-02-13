@@ -92,7 +92,7 @@
                                 <div class="row">
                                     <div class="col-sm-12">
                                         <div class="card-box table-responsive">
-                                            <form action="#" th:action="@{/update_all}">
+                                            <form action="#" th:action="@{/zegarek_net/update_all}">
                                   <button type="submit" class="btn btn-success btn-sm source">Aktualizuj wszystko</button>
                                                 <span class="count_top"><i class="fa fa-clock-o"></i> czas trwania: ok. 5 min &nbsp;</span>
                                                 <label th:text="'Ostatnia aktualizacja: ' + ${update_date} "></label>
@@ -118,7 +118,7 @@
                                                            th:href="@{${product.link}}"></a>
                                                     </td>
                                                     <td>
-                                                        <form th:action="@{/products}" method="post">
+                                                        <form th:action="@{/zegarek_net/products}" method="post">
                                                             <input type="hidden" name="brand" th:value="${product.brand}"/>
                                                             <input type="hidden" name="html" th:value="${product.link}"/>
                                                             <button type="submit" class="btn btn-success btn-sm"><i class="fa fa-list"></i><a>&emsp;produkty</a></button>
