@@ -17,17 +17,16 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.text.SimpleDateFormat;
 import java.util.*;
+import java.util.Map;
 
 @Service
 public class ZegareknetService {
 
     @Autowired
-    private
-    ZegarekNetBrandRepository zegarekNetBrandRepository;
+    private ZegarekNetBrandRepository zegarekNetBrandRepository;
 
     @Autowired
-    private
-    ZegarekNetProductRepository zegarekNetProductRepository;
+    private ZegarekNetProductRepository zegarekNetProductRepository;
 
     public ArrayList<ZegarekNetBrand> getZegaNetBrand() {
         return (ArrayList<ZegarekNetBrand>) zegarekNetBrandRepository.findAll();
@@ -168,5 +167,12 @@ public class ZegareknetService {
         }return markoBrandsList;
     }
 
-
+    public Map<String, Integer> zegNetMapNumberOfProductsByBrands(){
+        Map<String, Integer> testMap = new HashMap<>();
+        for(ZegarekNetBrand p : getZegaNetBrand()){
+            System.out.println(p.getBrand() + " " + p.getProducts().size());
+            testMap.put(p.getBrand(), p.getProducts().size());
+        }
+        return testMap;
+    }
 }

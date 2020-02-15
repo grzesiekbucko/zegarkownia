@@ -14,15 +14,19 @@ import java.util.List;
 public interface MarkoProductRepository extends JpaRepository<MarkoProduct, String> {
 
     @Async
-    @Query(value = "SELECT kod FROM marko_product t WHERE t.shiping = :shiping",
+    @Query(value = "SELECT kod, product_brand FROM marko_product t WHERE t.shiping = :shiping",
             nativeQuery = true)
     List<MarkoProduct> findProductByShiping(@Param("shiping") String shiping);
 
-    //   @Async
-    //   @Query(value = "SELECT marko_product.kod, marko_product.new_price, marko_product.percent_sale, marko_product.shiping, zegarek_net_product.zegarek_net_new_price FROM marko_product INNER JOIN zegarek_net_product ON marko_product.kod=zegarek_net_product.kod WHERE marko_product.new_price != zegarek_net_product.zegarek_net_new_price",
-//            nativeQuery = true)
-//    List<MarkoProduct> findProductByKod();
+    @Async
+    @Query(value = "SELECT kod, product_brand FROM marko_product t WHERE t.product_brand = :productBrand",
+            nativeQuery = true)
+    List<MarkoProduct> findProductByBrand(@Param("productBrand") String brand);
 
+    @Async
+    @Query(value = "SELECT kod, product_brand FROM marko_product t WHERE t.shiping = :shiping and t.product_brand = :productBrand",
+            nativeQuery = true)
+    List<MarkoProduct> findProductByShipingAndProductBrand(@Param("shiping") String shiping, @Param("productBrand") String brand);
 
     @Query(value = "SELECT p.product_brand AS productBrand, p.kod AS productKod, p.new_price AS newPrice, p.percent_sale AS percentSale, p.shiping AS shiping, \n" +
             "c.zegarek_net_new_price AS zegarekNetNewPrice, \n" +

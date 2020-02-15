@@ -9,4 +9,5 @@ public interface MarkoBrandRepository extends CrudRepository<MarkoBrand, String>
 
     List<MarkoBrand> findByBrandIn(List<String> brandIdList);
 
+
 }

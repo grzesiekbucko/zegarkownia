@@ -17,7 +17,9 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class MarkoServices {
@@ -43,8 +45,8 @@ public class MarkoServices {
         return (ArrayList<MarkoProduct>) markoProductRepository.findAll();
     }
 
-    public ArrayList<?> getMarkoProductShiping(String shiping) {
-        return (ArrayList<?>) markoProductRepository.findProductByShiping(shiping);
+    public ArrayList<MarkoProduct> getMarkoProductShiping(String shiping) {
+        return (ArrayList<MarkoProduct>) markoProductRepository.findProductByShiping(shiping);
     }
 
     public  ArrayList<ProductJoinInterface> getComparedProduct(){
@@ -191,5 +193,20 @@ public class MarkoServices {
             }
         }
 
+    }
+
+    public Map<String, Integer> markoMapNumberOfProductsByShiping(String shiping){
+        Map<String, Integer> testMap = new HashMap<>();
+        for(MarkoBrand p : getMarkoBrand()){
+            testMap.put(p.getBrand(),markoProductRepository.findProductByShipingAndProductBrand(shiping, p.getBrand()).size() );
+        }
+        return testMap;
+    }
+    public Map<String, Integer> markoMapNumberOfProductsByBrands(){
+        Map<String, Integer> testMap = new HashMap<>();
+        for(MarkoBrand p : getMarkoBrand()){
+            testMap.put(p.getBrand(), p.getProducts().size());
+        }
+        return testMap;
     }
 }
