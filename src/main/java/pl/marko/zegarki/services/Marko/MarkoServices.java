@@ -6,6 +6,7 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import pl.marko.zegarki.entity.ProductJoin;
 import pl.marko.zegarki.entity.marko.MarkoBrand;
 import pl.marko.zegarki.entity.marko.MarkoProduct;
 import pl.marko.zegarki.entity.ProductJoinInterface;
@@ -16,10 +17,7 @@ import java.io.IOException;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.text.DecimalFormat;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Service
 public class MarkoServices {
@@ -34,11 +32,12 @@ public class MarkoServices {
         return (ArrayList<MarkoBrand>) markoBrandRepository.findAll();
     }
 
-    public ArrayList<String> getmarkoBrandName(){
+    public ArrayList<String> getmarkoBrandName() {
         ArrayList<String> listName = new ArrayList<>();
-        for(MarkoBrand name :getMarkoBrand() ){
+        for (MarkoBrand name : getMarkoBrand()) {
             listName.add(name.getBrand());
-        }return listName;
+        }
+        return listName;
     }
 
     public ArrayList<MarkoProduct> getMarkoProduct() {
@@ -49,18 +48,18 @@ public class MarkoServices {
         return (ArrayList<MarkoProduct>) markoProductRepository.findProductByShiping(shiping);
     }
 
-    public  ArrayList<ProductJoinInterface> getComparedProduct(){
+    public ArrayList<ProductJoinInterface> getComparedProduct() {
         return (ArrayList<ProductJoinInterface>) markoProductRepository.findAllDtoBy();
     }
 
-    public void deleteAllMarkoProducts(){
+    public void deleteAllMarkoProducts() {
         markoProductRepository.deleteAll();
         markoProductRepository.flush();
     }
 
-    public String getPercent(Integer a, Integer total){
+    public String getPercent(Integer a, Integer total) {
         DecimalFormat formatter = new DecimalFormat("#0.00");
-        double percent = ((double)a / (double)total)*100;
+        double percent = ((double) a / (double) total) * 100;
         return formatter.format(percent);
     }
 
@@ -80,7 +79,8 @@ public class MarkoServices {
             markoBrandRepository.save(brand);
             System.out.println("zapisano do bazy " + name);
             markoBrandsList.add(brand);
-        }return markoBrandsList;
+        }
+        return markoBrandsList;
     }
 
 
@@ -195,18 +195,62 @@ public class MarkoServices {
 
     }
 
-    public Map<String, Integer> markoMapNumberOfProductsByShiping(String shiping){
+    public Map<String, Integer> markoMapNumberOfProductsByShiping(String shiping) {
         Map<String, Integer> testMap = new HashMap<>();
-        for(MarkoBrand p : getMarkoBrand()){
-            testMap.put(p.getBrand(),markoProductRepository.findProductByShipingAndProductBrand(shiping, p.getBrand()).size() );
+        for (MarkoBrand p : getMarkoBrand()) {
+            testMap.put(p.getBrand(), markoProductRepository.findProductByShipingAndProductBrand(shiping, p.getBrand()).size());
         }
         return testMap;
     }
-    public Map<String, Integer> markoMapNumberOfProductsByBrands(){
+
+    public Map<String, Integer> markoMapNumberOfProductsByBrands() {
         Map<String, Integer> testMap = new HashMap<>();
-        for(MarkoBrand p : getMarkoBrand()){
+        for (MarkoBrand p : getMarkoBrand()) {
             testMap.put(p.getBrand(), p.getProducts().size());
         }
         return testMap;
     }
+
+    public Map<String, Integer> comparedMapOfProductsByBrand() {
+        Map<String, Integer> testMap = new HashMap<>();
+        HashSet<String> brand = new HashSet<String>();
+
+        for (ProductJoinInterface p : getComparedProduct()) {
+            brand.add(p.getProductBrand());
+        }
+        for (String key : brand) {
+            testMap.put(key, markoProductRepository.findAllComparedProductBy(key).size());
+        }
+        return testMap;
+    }
+
+    public Map<String, Integer> comparedMapNumberOfProductsByShiping(String shiping) {
+        Map<String, Integer> testMap = new HashMap<>();
+        HashSet<String> brand = new HashSet<String>();
+
+        for (ProductJoinInterface p : getComparedProduct()) {
+            brand.add(p.getProductBrand());
+        }
+        for (String key : brand) {
+            testMap.put(key, markoProductRepository.findAllComparedProductByShiping(key, shiping).size());
+        }
+        return testMap;
+    }
+
+    public Map<String, Integer> comparedMapNumberOfProductsBySale() {
+        Map<String, Integer> testMap = new HashMap<>();
+        TreeSet<String> sale = new TreeSet<String>();
+
+        for (ProductJoinInterface p : getComparedProduct()) {
+            if (p.getPercentSale() != null) {
+                sale.add(p.getZegarekNetPercentSale());
+            }
+        }
+        for (String key : sale) {
+            BigDecimal percentSale = new BigDecimal(key);
+            testMap.put(key, markoProductRepository.findAllComparedProductBySale(percentSale).size());
+        }
+        return testMap;
+    }
+
 }

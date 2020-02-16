@@ -129,15 +129,18 @@
                                 <ul class="nav nav-tabs bar_tabs" id="myTab" role="tablist">
                                     <li class="nav-item">
                                         <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home"
-                                           role="tab" aria-controls="home" aria-selected="true">Produkty z podzialem na magazyn</a>
+                                           role="tab" aria-controls="home" aria-selected="true">Produkty z podzialem na
+                                            magazyn</a>
                                     </li>
                                     <li class="nav-item">
                                         <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile"
-                                           role="tab" aria-controls="profile" aria-selected="false">Porównanie ilości produktów</a>
+                                           role="tab" aria-controls="profile" aria-selected="false">Porównanie ilości
+                                            produktów</a>
                                     </li>
                                     <li class="nav-item">
                                         <a class="nav-link" id="contact-tab" data-toggle="tab" href="#contact"
-                                           role="tab" aria-controls="contact" aria-selected="false">Produkty do poprawy cen</a>
+                                           role="tab" aria-controls="contact" aria-selected="false">Produkty do poprawy
+                                            cen</a>
                                     </li>
                                 </ul>
                                 <div class="tab-content" id="myTabContent">
@@ -157,10 +160,13 @@
                                 mag_data_table_2.push(/*[[ ${map5dni.get(key)} ]]*/);
                                 /*[/]*/
 /*]]>*/
+
                                             </script>
                                         </div>
                                     </div>
-                                    <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+
+                                    <div class="tab-pane fade" id="profile" role="tabpanel"
+                                         aria-labelledby="contact-tab">
                                         <div class="x_content" style="height: 350px !important">
                                             <canvas id="brandChart"></canvas>
                                             <script type="text/javascript" th:inline="javascript">
@@ -175,12 +181,44 @@
                                 brand_data_table_2.push(/*[[ ${map_Zega_Net_Prod.get(key)} ]]*/);
                                 /*[/]*/
 /*]]>*/
+
                                             </script>
                                         </div>
-                                    </div>
-                                    <div class="tab-pane fade" id="contact" role="tabpanel"
-                                         aria-labelledby="contact-tab">
 
+                                    </div>
+
+                                    <div class="tab-pane fade" id="contact" role="tabpanel"
+                                         aria-labelledby="profile-tab">
+                                        <div class="x_content row" style="height: 350px !important">
+                                            <canvas id="brandComparedChart" class="col-8"></canvas>
+                                            <canvas id="brandComparedChartPie" class="col-4"></canvas>
+                                            <script type="text/javascript" th:inline="javascript">
+/*<![CDATA[*/
+                                var compared_brand_label_table = [];
+                                var compared_brand_data_table = [];
+                                var compared_brand_data_table_2 = [];
+
+                                /*[# th:each="key: ${map_compared_prod_brand.keySet()}"]*/
+                                compared_brand_label_table.push(/*[[ ${key} ]]*/);
+                                compared_brand_data_table.push(/*[[ ${map_compared_prod_shiping.get(key)} ]]*/);
+                                compared_brand_data_table_2.push(/*[[ ${map_compared_prod_shiping_5dni.get(key)} ]]*/);
+                                  /*[/]*/
+                                /*]]>*/
+
+                                            </script>
+                                            <script type="text/javascript" th:inline="javascript">
+/*<![CDATA[*/
+                                var compared_brand_label_chart = [];
+                                var compared_brand_data_chart = [];
+
+                                /*[# th:each="key: ${map_compared_prod_sale.keySet()}"]*/
+                                compared_brand_label_chart.push(/*[[ ${key} ]]*/);
+                                compared_brand_data_chart.push(/*[[ ${map_compared_prod_sale.get(key)} ]]*/);
+                                /*[/]*/
+/*]]>*/
+
+                                            </script>
+                                        </div>
                                     </div>
                                 </div>
                             </div>

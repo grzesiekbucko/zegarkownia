@@ -170,7 +170,6 @@ public class ZegareknetService {
     public Map<String, Integer> zegNetMapNumberOfProductsByBrands(){
         Map<String, Integer> testMap = new HashMap<>();
         for(ZegarekNetBrand p : getZegaNetBrand()){
-            System.out.println(p.getBrand() + " " + p.getProducts().size());
             testMap.put(p.getBrand(), p.getProducts().size());
         }
         return testMap;

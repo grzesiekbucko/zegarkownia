@@ -97,7 +97,74 @@ scales: {
  });
 
 };
+ if ($("#brandComparedChart").length){
+var data = {
+                   labels: compared_brand_label_table,
+                   datasets: [{
+                       label: "mag. marko",
+                       data: compared_brand_data_table,
+                       backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                       borderColor: 'rgba(54, 162, 235, 1)',
+                       borderWidth: 1
+                   },
+                   {
+                       label: "mag. zewn.",
+                       data: compared_brand_data_table_2,
+                       backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                       borderColor: 'rgba(75, 192, 192, 1)',
+                       borderWidth: 1
+                    }]
+               };
 
+var options =  {
+                maintainAspectRatio: false,
+                responsive: true,
+scales: {
+            yAxes: [{
+                ticks: {
+                    beginAtZero: true
+                }
+            }]
+        }
+                  };
 
+    var ctx = $('#brandComparedChart');
+    new Chart(ctx, {
+    type: 'bar',
+    options: options,
+    data: data
+ });
 
+};
 
+if ($("#brandComparedChartPie").length){
+    var data = {
+                   labels: compared_brand_label_chart,
+                   datasets: [{
+                       label: "% promocja - zeg. net",
+                       data: compared_brand_data_chart,
+                       backgroundColor: 'rgba(255, 159, 64, 0.2)',
+                       borderColor: 'rgba(255, 159, 64, 1)',
+                       borderWidth: 1
+                   }]
+               };
+    var options =  {
+                    maintainAspectRatio: false,
+                    responsive: true,
+    scales: {
+                yAxes: [{
+                    ticks: {
+                        beginAtZero: true
+                    }
+                }]
+            }
+                      };
+
+    var ctx = $('#brandComparedChartPie');
+    new Chart(ctx, {
+    type: 'bar',
+    options: options,
+    data: data
+ });
+
+};

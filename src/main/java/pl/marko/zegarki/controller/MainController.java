@@ -18,7 +18,7 @@ public class MainController {
     @Autowired
     private MarkoServices markoServices;
 
-    @GetMapping("/")
+    @GetMapping("/index")
     public ModelAndView showHomePage() {
         ModelAndView model = new ModelAndView("mainPage");
 
@@ -27,11 +27,17 @@ public class MainController {
         Integer shiping24godz = markoServices.getMarkoProductShiping("24 godziny").size();
         ArrayList<String> brand_list = markoServices.getmarkoBrandName();
 
+
         model.addObject("brand_counter", brand_list.size());
         model.addObject("map5dni", markoServices.markoMapNumberOfProductsByShiping("5 dni"));
         model.addObject("map24godz", markoServices.markoMapNumberOfProductsByShiping("24 godziny"));
         model.addObject("map_Marko_Prod", markoServices.markoMapNumberOfProductsByBrands());
         model.addObject("map_Zega_Net_Prod", zegareknetService.zegNetMapNumberOfProductsByBrands());
+        model.addObject("map_compared_prod_brand",markoServices.comparedMapOfProductsByBrand());
+        model.addObject("map_compared_prod_shiping",markoServices.comparedMapNumberOfProductsByShiping("24 godziny"));
+        model.addObject("map_compared_prod_shiping_5dni",markoServices.comparedMapNumberOfProductsByShiping("5 dni"));
+        model.addObject("map_compared_prod_sale",markoServices.comparedMapNumberOfProductsBySale());
+
         model.addObject("brand_list_name", brand_list);
         model.addObject("product_counter", productCount);
         model.addObject("product_5dni", shiping5dni);
