@@ -80,7 +80,7 @@ public class ZegareknetService {
             for (Element el : prodBox) {
                 Elements nameClass = el.select(".products-list-name");
                 String productKod = nameClass.select("span").first().text();
-                String link = nameClass.attr("href");
+                String link = el.select("a").attr("href");
                 String productLink = "https://www.zegarek.net" + link;
 
                 if (!el.select(".old-price").text().equals("") && !el.select(".new-price").text().equals("")) {
@@ -119,7 +119,7 @@ public class ZegareknetService {
                 for (Element el : prodBox) {
                     Elements nameClass = el.select(".products-list-name");
                     String productKod = nameClass.select("span").first().text();
-                    String link = nameClass.attr("href");
+                    String link = el.select("a").attr("href");
                     String productLink = "https://www.zegarek.net" + link;
 
                     if (!el.select(".old-price").text().equals("") && !el.select(".new-price").text().equals("")) {
