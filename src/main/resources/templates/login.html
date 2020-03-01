@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="pl" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <!-- Meta, title, CSS, favicons, etc. -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Login</title>
+
+    <!-- Google fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet"
+          th:href="@{https://fonts.googleapis.com/css?family=Roboto&display=swap}">
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+          th:href="@{https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css}"
+          integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <!-- Custom login style -->
+    <link href="../static/css/login.css" th:href="@{/css/login.css}" rel="stylesheet" type="text/css"/>
+
+</head>
+<body>
+<div class="container h-100">
+    <div class="row justify-content-center h-75 justify-content-center">
+        <div id="login_container" class="col-lg-4 col-md-6 col-sm-12 align-self-center">
+            <form>
+                <h4>Sing in</h4>
+                <div class="form-group">
+                    <label for="loginInputEmail"><i class="fa fa-envelope"></i> Email address:</label>
+                    <input type="email" class="form-control" id="loginInputEmail" aria-describedby="emailHelp">
+
+                </div>
+                <div class="form-group">
+                    <label for="loginInputPassword"><i class="fa fa-lock"></i> Password:</label>
+                    <input type="password" class="form-control" id="loginInputPassword">
+                </div>
+                <button type="submit" class="btn btn-sm button col-12" style="margin-bottom: 1rem;">Login</button>
+                <div>
+                    <a href="">
+                        <small id="registerButton"><i class="fa fa-user-plus"></i> Create an account</small>
+                    </a>
+                </div>
+            </form>
+        </div>
+    </div>
+
+</div>
+
+<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+        integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"
+        th:href="@{https://code.jquery.com/jquery-3.4.1.slim.min.js}"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+        integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"
+        th:href="@{https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js}"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+        integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"
+        th:href="@{https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js}"></script>
+<!-- FontAwesome -->
+<script src="https://use.fontawesome.com/2d4a782e0b.js" th:src="@{https://use.fontawesome.com/2d4a782e0b.js}"></script>
+</body>
+</html>

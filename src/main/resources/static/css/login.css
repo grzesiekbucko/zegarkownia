@@ -1,0 +1,61 @@
+html, body {
+    height: 100vh;
+    background-color: #2a323c;
+}
+html, body {
+    min-height: 100vh;
+}
+#login_container{
+background-color: #323c48;
+margin: 15px;
+padding: 15px;
+font-family: 'Roboto';
+border-radius: .25rem;
+box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
+}
+
+.button{
+color: #fff;
+background-color: #26b99a;
+border-color: #169F85;
+}
+
+.button:hover{
+color: #fff;
+background-color: #169f85;
+border-color: #1e7e34;
+}
+.button:focus{
+color: #fff;
+background-color: #169f85;
+border-color: #1e7e34;
+}
+
+label{
+color: #6c757d;
+font-size: 14px;
+}
+
+#registerButton{
+color: #6c757d;
+}
+#singInButton{
+color: #169f85;
+}
+
+#registerButton:hover, #singInButton:hover{
+color: #839eb9;
+}
+
+a:hover, a:visited, a:link, a:active{
+text-decoration: none;
+}
+
+i{
+color: #6c757d;
+}
+
+form h4{
+text-align: center;
+color: #169f85;
+}
