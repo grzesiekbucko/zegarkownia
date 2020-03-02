@@ -23,8 +23,7 @@ public class MarkoController {
     @RequestMapping(value = "/marko/brand", method = RequestMethod.GET)
     public ModelAndView showMainPage() {
         ModelAndView model = new ModelAndView("marko_brand_table");
-        List<MarkoBrand> list = markoServices.getMarkoBrand();
-        model.addObject("markoBrand", list);
+        model.addObject("markoBrand", markoServices.getMarkoBrand());
         return model;
     }
 
@@ -55,8 +54,7 @@ public class MarkoController {
     @RequestMapping(value = "/marko/select_brand", method = RequestMethod.GET)
     public ModelAndView selectbrand() {
         ModelAndView model = new ModelAndView("marko_find_product_table");
-        List<MarkoBrand> brandList = markoServices.getMarkoBrand();
-        model.addObject("markoBrand", brandList);
+        model.addObject("markoBrand", markoServices.getMarkoBrand());
         return model;
     }
 
@@ -65,10 +63,9 @@ public class MarkoController {
         ModelAndView model = new ModelAndView("marko_find_product_table");
         List<String> brandSplitedList = Arrays.asList(selectedBrand.split(","));
 
-        List<MarkoBrand> brandList = markoServices.getMarkoBrand();
         ArrayList productList = markoServices.findByBrands(brandSplitedList);
         model.addObject("markoProd", productList);
-        model.addObject("markoBrand", brandList);
+        model.addObject("markoBrand", markoServices.getMarkoBrand());
         return model;
     }
 

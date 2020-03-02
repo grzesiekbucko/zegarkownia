@@ -23,23 +23,34 @@
 <div class="container h-100">
     <div class="row justify-content-center h-75 justify-content-center">
         <div id="login_container" class="col-lg-4 col-md-6 col-sm-12 align-self-center">
-            <form>
+            <form th:action="@{/registration}" th:object="${user}" method="post">
                 <h4>Create Account</h4>
                 <div class="form-group">
                     <label for="exampleInputName"><i class="fa fa-user"></i> Name:</label>
-                    <input type="email" class="form-control" id="exampleInputName" aria-describedby="emailHelp">
+                    <input type="text" class="form-control" id="exampleInputName" th:field="*{name}">
+                    <label th:if="${#fields.hasErrors('name')}" th:errors="*{name}"
+                           class="validation-message"></label>
                 </div>
                 <div class="form-group">
                     <label for="registrationInputEmail"><i class="fa fa-envelope"></i> Email address:</label>
-                    <input type="email" class="form-control" id="registrationInputEmail" aria-describedby="emailHelp">
+                    <input type="email" class="form-control" id="registrationInputEmail" aria-describedby="emailHelp"
+                           th:field="*{email}">
+                    <label
+                            th:if="${#fields.hasErrors('email')}" th:errors="*{email}"
+                            class="validation-message"></label>
                 </div>
                 <div class="form-group">
                     <label for="registrationInputPassword"><i class="fa fa-lock"></i> Password:</label>
-                    <input type="password" class="form-control" id="registrationInputPassword">
+                    <input type="password" class="form-control" id="registrationInputPassword" th:field="*{password}">
+                    <label th:if="${#fields.hasErrors('password')}" th:errors="*{password}"
+                           class="validation-message"></label>
                 </div>
                 <button type="submit" class="btn btn-sm button col-12" style="margin-bottom: 1rem;">Register</button>
+                <div align="center">
+                    <p th:utext="${successMessage}" style="font-size: 14px; color: #26b99a;"></p>
+                </div>
                 <div style="text-align: center; color: #6c757d">
-                        <small>Alredy have Account?<a href="" id="singInButton"> Sign In</a></small>
+                    <small>Alredy have account?<a th:href="@{/login}" id="singInButton"> Sign In</a></small>
                 </div>
             </form>
         </div>

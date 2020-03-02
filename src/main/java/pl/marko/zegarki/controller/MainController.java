@@ -1,10 +1,14 @@
 package pl.marko.zegarki.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.servlet.ModelAndView;
+import pl.marko.zegarki.entity.User;
 import pl.marko.zegarki.services.Marko.MarkoServices;
+import pl.marko.zegarki.services.UserService;
 import pl.marko.zegarki.services.ZegarekNet.ZegareknetService;
 
 import java.util.ArrayList;
@@ -18,6 +22,9 @@ public class MainController {
     @Autowired
     private MarkoServices markoServices;
 
+    @Autowired
+    private UserService userService;
+
     @GetMapping("/index")
     public ModelAndView showHomePage() {
         ModelAndView model = new ModelAndView("mainPage");
@@ -26,7 +33,8 @@ public class MainController {
         Integer shiping5dni = markoServices.getMarkoProductShiping("5 dni").size();
         Integer shiping24godz = markoServices.getMarkoProductShiping("24 godziny").size();
         ArrayList<String> brand_list = markoServices.getmarkoBrandName();
-
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        User user = userService.findUserByEmail(auth.getName());
 
         model.addObject("brand_counter", brand_list.size());
         model.addObject("map5dni", markoServices.markoMapNumberOfProductsByShiping("5 dni"));
@@ -48,6 +56,7 @@ public class MainController {
         model.addObject("worst_price_counter", markoServices.getComparedProduct().size());
         model.addObject("zegarek_net_product_counter", zegareknetService.getAllProductsZegarekNet().size());
         model.addObject("zegarek_net_brand_counter", zegareknetService.getZegaNetBrand().size());
+        model.addObject("userName", user.getName());
         return model;
     }
 

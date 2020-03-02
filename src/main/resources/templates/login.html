@@ -23,24 +23,29 @@
 <div class="container h-100">
     <div class="row justify-content-center h-75 justify-content-center">
         <div id="login_container" class="col-lg-4 col-md-6 col-sm-12 align-self-center">
-            <form>
+            <form th:action="@{/login}" method="POST">
                 <h4>Sing in</h4>
                 <div class="form-group">
                     <label for="loginInputEmail"><i class="fa fa-envelope"></i> Email address:</label>
-                    <input type="email" class="form-control" id="loginInputEmail" aria-describedby="emailHelp">
-
+                    <input type="email" class="form-control" id="loginInputEmail" aria-describedby="emailHelp"
+                           name="email">
                 </div>
+
                 <div class="form-group">
                     <label for="loginInputPassword"><i class="fa fa-lock"></i> Password:</label>
-                    <input type="password" class="form-control" id="loginInputPassword">
+                    <input type="password" class="form-control" id="loginInputPassword" name="password">
+                </div>
+                <div align="center" th:if="${param.error}">
+                    <p style="font-size: 14px; color: #df1a31;">Email or Password invalid, please verify</p>
+                </div>
+                <div align="center" th:if="${param.logout}">
+                    <p style="font-size: 14px; color: #26b99a;">You have been logged out.</p>
                 </div>
                 <button type="submit" class="btn btn-sm button col-12" style="margin-bottom: 1rem;">Login</button>
-                <div>
-                    <a href="">
-                        <small id="registerButton"><i class="fa fa-user-plus"></i> Create an account</small>
-                    </a>
-                </div>
             </form>
+            <div style="text-align: center; color: #6c757d">
+                <small>Don't have an account?<a th:href="@{/registration}" id="registerButton"> Sign up here</a></small>
+            </div>
         </div>
     </div>
 

@@ -36,10 +36,7 @@ color: #6c757d;
 font-size: 14px;
 }
 
-#registerButton{
-color: #6c757d;
-}
-#singInButton{
+#singInButton, #registerButton{
 color: #169f85;
 }
 
@@ -58,4 +55,8 @@ color: #6c757d;
 form h4{
 text-align: center;
 color: #169f85;
+}
+
+.validation-message {
+color: #df1a31 !important;
 }
