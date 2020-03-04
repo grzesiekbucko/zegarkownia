@@ -2920,7 +2920,7 @@ span.right {
 .sidebar-footer a {
     padding: 7px 0 3px;
     text-align: center;
-    width: 25%;
+    width: 50%;
     font-size: 17px;
     display: block;
     float: left;
@@ -2928,7 +2928,8 @@ span.right {
 }
 
 .sidebar-footer a:hover {
-    background: #425567
+    background: #425567;
+    color: #1abb9c;
 }
 
 .tile_count {
@@ -6185,4 +6186,10 @@ ul.notifications {
 
 .calendar-exibit .calendar-table {
     padding: 0 0 4px 0
+}
+.dropdown-item.active, .dropdown-item:active {
+    color:
+#fff;
+text-decoration: none;
+background-color: #1abb9c !important;
 }

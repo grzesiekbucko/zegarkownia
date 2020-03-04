@@ -22,6 +22,6 @@ background-color: #26b99a !important;
     background-color: #26b99a !important;
 }
 a:not([href]):hover {
-    color: white;
+    color: inherit;
     text-decoration: none;
 }

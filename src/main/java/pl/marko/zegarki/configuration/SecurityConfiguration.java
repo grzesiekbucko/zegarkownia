@@ -41,7 +41,6 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .passwordEncoder(bCryptPasswordEncoder);
     }
 
-
     @Override
     protected void configure(HttpSecurity http) throws Exception {
 
@@ -67,6 +66,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .logoutSuccessUrl("/login").and().exceptionHandling()
                 .accessDeniedPage("/access-denied");
     }
+
     @Override
     public void configure(WebSecurity web) throws Exception {
         web

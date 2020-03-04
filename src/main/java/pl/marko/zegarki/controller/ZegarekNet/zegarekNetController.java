@@ -1,14 +1,18 @@
 package pl.marko.zegarki.controller.ZegarekNet;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
+import pl.marko.zegarki.entity.User;
 import pl.marko.zegarki.entity.ZegarekNet.ZegarekNetBrand;
 import pl.marko.zegarki.entity.ZegarekNet.ZegarekNetProduct;
+import pl.marko.zegarki.services.UserService;
 import pl.marko.zegarki.services.ZegarekNet.ZegareknetService;
 
 import java.io.IOException;
@@ -22,11 +26,17 @@ public class zegarekNetController {
     @Autowired
     private ZegareknetService zegareknetService;
 
+    @Autowired
+    private UserService userService;
+
     @RequestMapping(value = "/zegarek_net/brand", method = RequestMethod.GET)
     public ModelAndView showMainPage() {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        User user = userService.findUserByEmail(auth.getName());
         ModelAndView model = new ModelAndView("zeg_net_brand_table");
         List<ZegarekNetBrand> list = zegareknetService.getZegaNetBrand();
         model.addObject("zegarekNetBrand", list);
+        model.addObject("userName", user.getName());
         return zegareknetService.updateTimestamp(model);
     }
 
@@ -58,23 +68,31 @@ public class zegarekNetController {
 
     @RequestMapping(value = "/zegarek_net/products/{brand}", method = RequestMethod.GET)
     public ModelAndView deleteIncome(@PathVariable(value = "brand") ZegarekNetBrand brand) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        User user = userService.findUserByEmail(auth.getName());
         ModelAndView productsModel = new ModelAndView("zeg_net_product_table");
         List<ZegarekNetProduct> productList = zegareknetService.getZegaNetProducts(brand);
         productsModel.addObject("zegarekNetProd", productList);
         productsModel.addObject("productBrandName", brand.getBrand());
+        productsModel.addObject("userName", user.getName());
         return productsModel;
     }
 
     @RequestMapping(value = "/zegarek_net/select_brand", method = RequestMethod.GET)
     public ModelAndView selectbrand() {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        User user = userService.findUserByEmail(auth.getName());
         ModelAndView model = new ModelAndView("zeg_net_find_product_table");
         List<ZegarekNetBrand> brandList = zegareknetService.getZegaNetBrand();
         model.addObject("zegarekNetBrand", brandList);
+        model.addObject("userName", user.getName());
         return model;
     }
 
     @RequestMapping(value = "/zegarek_net/show_selected_brand", method = RequestMethod.POST)
     public ModelAndView showSelected(@RequestParam String selectedBrand) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        User user = userService.findUserByEmail(auth.getName());
         ModelAndView model = new ModelAndView("zeg_net_find_product_table");
         List<String> brandSplitedList = Arrays.asList(selectedBrand.split(","));
 
@@ -82,6 +100,7 @@ public class zegarekNetController {
         ArrayList productList = zegareknetService.findByBrands(brandSplitedList);
         model.addObject("zegarekNetProd", productList);
         model.addObject("zegarekNetBrand", brandList);
+        model.addObject("userName", user.getName());
         return model;
     }
 }
