@@ -1,7 +1,5 @@
 package pl.marko.zegarki.entity;
 
-import java.math.BigDecimal;
-
 public interface ProductJoinInterface {
 
     String getProductBrand();

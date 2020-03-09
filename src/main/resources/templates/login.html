@@ -24,7 +24,7 @@
     <div class="row justify-content-center h-75 justify-content-center">
         <div id="login_container" class="col-lg-4 col-md-6 col-sm-12 align-self-center">
             <form th:action="@{/login}" method="POST">
-                <h4>Sing in</h4>
+                <h4>Sign in</h4>
                 <div class="form-group">
                     <label for="loginInputEmail"><i class="fa fa-envelope"></i> Email address:</label>
                     <input type="email" class="form-control" id="loginInputEmail" aria-describedby="emailHelp"
@@ -40,6 +40,9 @@
                 </div>
                 <div align="center" th:if="${param.logout}">
                     <p style="font-size: 14px; color: #26b99a;">You have been logged out.</p>
+                </div>
+                <div align="center">
+                    <p th:utext="${successMessage}" style="font-size: 14px; color: #26b99a;"></p>
                 </div>
                 <button type="submit" class="btn btn-sm button col-12" style="margin-bottom: 1rem;">Login</button>
             </form>

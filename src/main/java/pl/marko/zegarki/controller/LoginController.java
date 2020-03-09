@@ -44,10 +44,11 @@ public class LoginController {
         if (bindingResult.hasErrors()) {
             modelAndView.setViewName("registration");
         } else {
+            ModelAndView loginModel = new ModelAndView("login");
             userService.saveUser(user);
-            modelAndView.addObject("successMessage", "User has been registered successfully");
+            loginModel.addObject("successMessage", "User has been registered successfully");
             modelAndView.addObject("user", new User());
-            modelAndView.setViewName("registration");
+            return loginModel;
         }
         return modelAndView;
     }

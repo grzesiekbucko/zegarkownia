@@ -50,10 +50,12 @@ public class User {
     }
 
     public int getActive() {
+
         return active;
     }
 
     public void setActive(int active) {
+
         this.active = active;
     }
 
