@@ -42,6 +42,26 @@
 
     <!-- Switcher -->
     <link href="../static/css/switchery.min.css" rel="stylesheet" th:href="@{/css/switchery.min.css}">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script>
+    $(document).ready(function(){
+      $(".active_input").click(function(){
+        var $row = $(this).closest("tr");
+        if($row.find(".active_input").is(":checked")){
+          $row.find(".inp_true").click();
+        }else {
+            $row.find(".inp_false").click();
+      }
+      $row.find(".btn-sbm-action").click();
+      });
+
+      $(".form-control").change(function(){
+        var $row = $(this).closest("tr");
+        $row.find(".btn-sbm-role").click();
+      });
+    });
+
+    </script>
 
 </head>
 
@@ -69,7 +89,7 @@
                 <div class="clearfix"></div>
 
                 <div class="row">
-                    <div class="col-md-8 col-sm-8 ">
+                    <div class="col-md-6 col-sm-6 ">
                         <div class="x_panel">
                             <div class="x_title">
                                 <h2>Użytkownicy</h2>
@@ -103,9 +123,7 @@
                                                     <th>Name</th>
                                                     <th>Email</th>
                                                     <th>Role</th>
-                                                    <th>Role</th>
                                                     <th>Active</th>
-                                                    <th>Edit</th>
                                                 </tr>
                                                 </thead>
                                                 <tbody>
@@ -113,10 +131,10 @@
                                                     <td th:text="${iStat.count}"></td>
                                                     <td th:text="${users.name}"></td>
                                                     <td th:text="${users.email}"></td>
-                                                    <td th:text="${users.role}"></td>
                                                     <form th:action="@{/admin/update}" method="post">
                                                         <td>
-                                                            <select class="form-control form-control-sm">
+                                                            <select class="form-control form-control-sm"
+                                                                    name="option_role">
                                                                 <option th:value="${users.role}"
                                                                         th:text="${users.role}"
                                                                         selected="selected"></option>
@@ -124,43 +142,36 @@
                                                                 <option th:each="dropdownValue: ${dropdownRole}"
                                                                         th:if="${users.role}!= ${dropdownValue.role}"
                                                                         th:value="${dropdownValue.role}"
-                                                                        th:text="${dropdownValue.role}"></option>
+                                                                        th:text="${dropdownValue.role}"
+
+                                                                ></option>
                                                             </select>
                                                         </td>
                                                         <td>
                                                             <label>
                                                                 <input type="hidden" name="id" th:value="${users.id}"/>
-                                                                <input id="active_input" type="checkbox"
-                                                                       class="js-switch"
+                                                                <input type="checkbox"
+                                                                       class="js-switch active_input"
                                                                        style="width: 32px; height: 20px;"
                                                                        th:checked="${users.active}=='1'"/>
                                                                 <input name="active" type="radio" value="1"
-                                                                       id="inp_true"
-                                                                       th:value="${'1'}" style="display: none;"/>
+                                                                       class="inp_true"
+                                                                       th:value="${'1'}" style="display: none"/>
                                                                 <input name="active" type="radio" value="2"
-                                                                       id="inp_false"
-                                                                       th:value="${'0'}" style="display: none;"/>
-                                                                <script>
-  function toggleDiv() {
-    var triggeredDiv = document.querySelector('.triggeredDiv');
-    if (document.getElementById('active_input').checked) {
-      document.getElementById('inp_true').click();
-    } else {
-      document.getElementById('inp_false').click();
-    }
-  }
-  document.getElementById('active_input').addEventListener("change", toggleDiv);
-
-                                                                </script>
+                                                                       class="inp_false"
+                                                                       th:value="${'0'}" style="display: none"/>
                                                             </label>
 
                                                         </td>
-                                                        <td>
-                                                            <button style="margin-bottom: 0px" type="submit"
-                                                                    class="btn btn-success btn-sm"><i
-                                                                    class="fa fa-edit"></i><a> zapisz</a></button>
+                                                        <td style="display: none">
+                                                            <button style="display: none" type="submit"
+                                                                    class="btn-sbm-action">zapisz
+                                                            </button>
+                                                            <button style="display: none" class="btn-sbm-role"
+                                                                    type="submit" name="action" value="save">role
+                                                            </button>
+                                                        </td>
                                                     </form>
-                                                    </td>
                                                 </tr>
                                                 </tbody>
 

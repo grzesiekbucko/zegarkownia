@@ -57,4 +57,16 @@ public class UserService {
         userRepository.setUserActive(active, id);
     }
 
+    public void updateUserRole(int id, String role) {
+        int roleInt = 0;
+        if(role.equals("ADMIN")){
+            roleInt = 1;
+        }else if(role.equals("USER")){
+            roleInt = 2;
+        }else{
+            roleInt = 0;
+        }
+        userRepository.setUserRole(id, roleInt);
+    }
+
 }

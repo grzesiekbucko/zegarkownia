@@ -39,9 +39,14 @@ public class UsersController {
     }
 
     @RequestMapping(value = {"/admin/update"}, method = RequestMethod.POST)
-    public String updateUsers(@RequestParam int id, int active) throws IOException {
+    public String updateUsers(@RequestParam int id, int active, String option_role) throws IOException {
         userService.updateUserActive(active, id);
+        return "redirect:/admin/users";
+    }
 
+    @RequestMapping(value = {"/admin/update"}, method = RequestMethod.POST, params = "action=save")
+    public String updateRole(@RequestParam int id, String option_role) throws IOException {
+        userService.updateUserRole(id, option_role);
         return "redirect:/admin/users";
     }
 

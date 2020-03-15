@@ -25,4 +25,8 @@ public interface UserRepository extends JpaRepository<User, Integer> {
     @Query(value = "UPDATE users u SET active = :active WHERE u.user_id = :id", nativeQuery = true)
     void setUserActive(@Param("active") int active, @Param("id") int id);
 
+    @Modifying(clearAutomatically = true, flushAutomatically = true)
+    @Transactional
+    @Query(value = "UPDATE user_role u SET role_id = :role WHERE u.user_id = :id", nativeQuery = true)
+    void setUserRole(@Param("id") int id, @Param("role") int role);
 }
